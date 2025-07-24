@@ -150,4 +150,4 @@ For local customization, create `~/.zshrc.local` for machine-specific settings t
 
 ## License
 
-MIT License - see LICENSE file for details.
+MIT License - see [LICENSE](LICENSE) file for details.

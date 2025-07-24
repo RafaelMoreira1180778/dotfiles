@@ -1,0 +1,60 @@
+# ==========================================
+# Ghostty Terminal Configuration
+# ==========================================
+# Modern terminal setup for development
+
+# ==========================================
+# Font Configuration
+# ==========================================
+font-family = "FiraCode Nerd Font"
+font-size = 16
+font-thicken = true
+
+# ==========================================
+# Theme and Colors
+# ==========================================
+theme = "GitHub Dark"
+background-opacity = 0.95
+unfocused-split-opacity = 0.7
+
+# ==========================================
+# Window Configuration
+# ==========================================
+window-padding-x = 8
+window-padding-y = 8
+window-decoration = true
+window-title-font-family = "SF Pro Display"
+
+# ==========================================
+# Terminal Behavior
+# ==========================================
+scrollback-limit = 4294967296
+confirm-close-surface = false
+
+# ==========================================
+# Shell Integration
+# ==========================================
+shell-integration = zsh
+shell-integration-features = cursor,sudo,title
+
+# ==========================================
+# Keybindings
+# ==========================================
+# Use standard macOS keybindings
+macos-option-as-alt = true
+
+# ==========================================
+# Performance
+# ==========================================
+# Optimize for development workflow
+resize-overlay = after-first
+resize-overlay-position = center
+resize-overlay-duration = 500ms
+
+# ==========================================
+# Development Features
+# ==========================================
+# Enable features useful for development
+copy-on-select = false
+click-repeat-interval = 300
+mouse-hide-while-typing = true
