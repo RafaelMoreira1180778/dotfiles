@@ -83,9 +83,3 @@ export XDG_STATE_HOME="$HOME/.local/state"
 # GPG Configuration
 # ==========================================
 export GPG_TTY="$(tty)"
-
-# ==========================================
-# Local Environment Override
-# ==========================================
-# Source local environment variables if they exist
-[[ -f "$HOME/.zshenv.local" ]] && source "$HOME/.zshenv.local"

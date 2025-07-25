@@ -37,3 +37,7 @@ source "$ZSHCONFIG/keybindings.zsh"
 
 # 9. Custom functions and final integrations
 source "$ZSHCONFIG/functions.zsh"
+
+# 10. Local configuration (machine-specific settings)
+# This must be sourced last to allow overrides
+[[ -f "$ZSHCONFIG/local.zsh" ]] && source "$ZSHCONFIG/local.zsh"

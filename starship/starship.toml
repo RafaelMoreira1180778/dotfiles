@@ -28,7 +28,7 @@ command_timeout = 1000
 [character]
 success_symbol = "[❯](bold green)"
 error_symbol = "[❯](bold red)"
-vicmd_symbol = "[❮](bold yellow)"
+vimcmd_symbol = "[❮](bold yellow)"
 
 # ==========================================
 # Directory Display
@@ -58,7 +58,7 @@ ahead = "⇡${count}"
 behind = "⇣${count}"
 diverged = "⇕⇡${ahead_count}⇣${behind_count}"
 untracked = "?"
-stashed = "$"
+stashed = "stash"
 modified = "!"
 staged = "+"
 renamed = "»"

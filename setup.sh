@@ -52,18 +52,20 @@ brew_package_installed() {
 install_dependencies() {
     log_header "Checking and installing dependencies..."
     
-    # Check for Homebrew
-    if ! command_exists brew; then
+    # Check for Homebrew (command or Apple Silicon location)
+    if ! command_exists brew && [[ ! -f "/opt/homebrew/bin/brew" ]]; then
         log_warning "Homebrew not found. Installing Homebrew..."
         /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-        
         # Add Homebrew to PATH for Apple Silicon Macs
         if [[ -f "/opt/homebrew/bin/brew" ]]; then
             eval "$(/opt/homebrew/bin/brew shellenv)"
         fi
-        
         log_success "Homebrew installed successfully"
     else
+        # If Homebrew exists but brew command isn't in PATH, add it
+        if [[ ! $(command -v brew) && -f "/opt/homebrew/bin/brew" ]]; then
+            eval "$(/opt/homebrew/bin/brew shellenv)"
+        fi
         log_success "Homebrew already installed"
     fi
     
@@ -243,7 +245,7 @@ main() {
     echo "  1. Restart your terminal or run: source ~/.zshrc"
     echo "  2. The first startup might be slower as plugins are downloaded"
     echo "  3. Use 'zinit times' to check plugin loading performance"
-    echo "  4. Create ~/.zshrc.local for machine-specific customizations"
+    echo "  4. Create ~/.dotfiles/zsh/local.zsh for machine-specific customizations"
     echo ""
     log_info "Key bindings:"
     echo "  • Ctrl+R: FZF history search"

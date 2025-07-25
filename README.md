@@ -56,7 +56,8 @@ A fast, modern, and feature-rich ZSH configuration optimized for development wor
 │   ├── fzf.zsh          # FZF integration
 │   ├── aliases.zsh       # Command aliases
 │   ├── keybindings.zsh   # Key bindings
-│   └── functions.zsh     # Custom functions
+│   ├── functions.zsh     # Custom functions
+│   └── local.zsh         # Local machine-specific config (gitignored)
 ├── starship/
 │   └── starship.toml     # Prompt configuration
 └── ghostty/
@@ -106,12 +107,14 @@ pip        # pip3
 
 ### Local Configuration
 
-Create `~/.zshrc.local` for machine-specific settings:
+Create `~/.dotfiles/zsh/local.zsh` for machine-specific settings:
 
 ```bash
 export CUSTOM_VAR="value"
 alias myalias="command"
 ```
+
+This file is automatically sourced at the end of the ZSH configuration and is gitignored for local customization.
 
 ### Adding Plugins
 
@@ -146,7 +149,7 @@ zinit light user/plugin-name
 4. Test thoroughly
 5. Submit a pull request
 
-For local customization, create `~/.zshrc.local` for machine-specific settings that won't be tracked in git.
+For local customization, create `~/.dotfiles/zsh/local.zsh` for machine-specific settings that won't be tracked in git.
 
 ## License
 

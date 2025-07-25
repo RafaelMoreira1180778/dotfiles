@@ -93,9 +93,3 @@ fi
 if command -v starship >/dev/null 2>&1; then
     eval "$(starship init zsh)"
 fi
-
-# ==========================================
-# Local Functions Override
-# ==========================================
-# Source local functions if they exist
-[[ -f "$HOME/.zsh_functions.local" ]] && source "$HOME/.zsh_functions.local"
