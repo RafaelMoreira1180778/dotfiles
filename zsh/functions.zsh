@@ -87,6 +87,14 @@ if command -v zoxide >/dev/null 2>&1; then
 fi
 
 # ==========================================
+# Direnv Initialization
+# ==========================================
+# Initialize direnv prompt (must be at end)
+if command -v direnv >/dev/null 2>&1; then
+    eval "$(direnv hook zsh)"
+fi
+
+# ==========================================
 # Starship Prompt Initialization
 # ==========================================
 # Initialize Starship prompt (must be at end)

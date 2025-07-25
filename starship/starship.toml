@@ -13,6 +13,8 @@ $hostname\
 $directory\
 $git_branch\
 $git_status\
+$kubernetes\
+$aws\
 $python\
 $docker_context\
 $cmd_duration\
@@ -46,7 +48,7 @@ read_only_style = "red"
 # Git Integration
 # ==========================================
 [git_branch]
-symbol = "🌱 "
+symbol = "⎇ "
 style = "bright-green bold"
 format = "[$symbol$branch]($style) "
 
@@ -58,7 +60,7 @@ ahead = "⇡${count}"
 behind = "⇣${count}"
 diverged = "⇕⇡${ahead_count}⇣${behind_count}"
 untracked = "?"
-stashed = "stash"
+stashed = "$"
 modified = "!"
 staged = "+"
 renamed = "»"
@@ -68,14 +70,14 @@ deleted = "✘"
 # Programming Languages
 # ==========================================
 [python]
-symbol = "🐍 "
+symbol = "λ "
 style = "yellow bold"
 format = '[$symbol$pyenv_prefix($version)]($style) '
 pyenv_version_name = true
 python_binary = ["python3", "python", "python2"]
 
 [nodejs]
-symbol = "⬢ "
+symbol = "⬡ "
 style = "green bold"
 format = "[$symbol$version]($style) "
 
@@ -83,7 +85,7 @@ format = "[$symbol$version]($style) "
 # Development Tools
 # ==========================================
 [docker_context]
-symbol = "🐳 "
+symbol = "⬢ "
 style = "blue bold"
 format = "[$symbol$context]($style) "
 only_with_files = true
@@ -92,6 +94,21 @@ only_with_files = true
 symbol = "📦 "
 style = "bright-yellow bold"
 format = "[$symbol$version]($style) "
+
+# ==========================================
+# Cloud & Infrastructure
+# ==========================================
+[kubernetes]
+symbol = "☸️ "
+style = "cyan bold"
+format = '[$symbol$context( \($namespace\))]($style) '
+disabled = false
+
+[aws]
+symbol = "☁ "
+style = "bright-yellow bold"
+format = '[$symbol($profile )(\($region\))]($style) '
+disabled = false
 
 # ==========================================
 # System Information
@@ -134,9 +151,9 @@ format = "[$time]($style) "
 # Battery (for laptops)
 # ==========================================
 [battery]
-full_symbol = "🔋"
-charging_symbol = "⚡"
-discharging_symbol = "💀"
+full_symbol = "⚡"
+charging_symbol = "⇡"
+discharging_symbol = "⇣"
 
 [[battery.display]]
 threshold = 15
@@ -152,7 +169,7 @@ style = "bold yellow"
 [memory_usage]
 disabled = true
 threshold = 70
-symbol = "🐏 "
+symbol = "⚠ "
 style = "bold dimmed white"
 
 # ==========================================
