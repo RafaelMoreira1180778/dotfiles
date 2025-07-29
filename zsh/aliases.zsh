@@ -44,12 +44,6 @@ alias dps='docker ps'
 alias di='docker images'
 
 # ==========================================
-# Python shortcuts
-# ==========================================
-alias py='python3'
-alias pip='pip3'
-
-# ==========================================
 # Quick edit common files
 # ==========================================
 alias zshrc='code ~/.dotfiles/zsh/.zshrc'

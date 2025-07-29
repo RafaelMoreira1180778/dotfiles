@@ -14,12 +14,16 @@ export PATH="/usr/local/bin:/usr/local/sbin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 
 # Development tools
-export PATH="$HOME/.cargo/bin:$PATH"      # Rust
-export PATH="$HOME/go/bin:$PATH"          # Go
+export PATH="$HOME/.cargo/bin:$PATH" # Rust
+export PATH="$HOME/go/bin:$PATH"     # Go
 
 # Volta (Node.js version manager)
 export VOLTA_HOME="$HOME/.volta"
 export PATH="$VOLTA_HOME/bin:$PATH"
+
+# Pyenv
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
 
 # ==========================================
 # Core Environment Variables
@@ -45,7 +49,6 @@ export LC_ALL='en_US.UTF-8'
 # Python configuration
 export PYTHONDONTWRITEBYTECODE=1
 export PYTHONUNBUFFERED=1
-export PIP_REQUIRE_VIRTUALENV=true
 
 # Node.js configuration
 export NODE_ENV='development'

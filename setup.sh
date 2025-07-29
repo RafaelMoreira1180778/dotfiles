@@ -70,7 +70,7 @@ install_dependencies() {
     fi
     
     # List of required packages
-    local packages=("starship" "fzf" "zoxide" "eza" "bat" "direnv")
+    local packages=("starship" "fzf" "zoxide" "eza" "bat" "direnv" "volta" "pyenv")
     
     for package in "${packages[@]}"; do
         if brew_package_installed "$package"; then
