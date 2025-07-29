@@ -42,26 +42,26 @@ command_exists() {
 main() {
     echo "🔍 Dotfiles Verification Report"
     echo "=============================="
-    
+
     local errors=0
-    
+
     # Check symbolic links
     log_header "Checking symbolic links..."
-    
+
     if [[ -L "$HOME/.zshrc" ]] && [[ "$(readlink "$HOME/.zshrc")" == "$HOME/.dotfiles/zsh/.zshrc" ]]; then
         log_success "ZSH configuration linked correctly"
     else
         log_error "ZSH configuration not linked properly"
         ((errors++))
     fi
-    
+
     if [[ -L "$HOME/.config/starship.toml" ]] && [[ "$(readlink "$HOME/.config/starship.toml")" == "$HOME/.dotfiles/starship/starship.toml" ]]; then
         log_success "Starship configuration linked correctly"
     else
         log_error "Starship configuration not linked properly"
         ((errors++))
     fi
-    
+
     # Check Ghostty configuration if it exists
     if [[ -L "$HOME/.config/ghostty/config" ]]; then
         if [[ "$(readlink "$HOME/.config/ghostty/config")" == "$HOME/.dotfiles/ghostty/config" ]]; then
@@ -73,11 +73,11 @@ main() {
     else
         log_info "Ghostty configuration not found (optional)"
     fi
-    
+
     # Check required commands
     log_header "Checking required tools..."
-    
-    local commands=("starship" "fzf" "zoxide" "eza" "bat" "zinit")
+
+    local commands=("starship" "fzf" "zoxide" "eza" "bat" "direnv" "volta" "pyenv")
     for cmd in "${commands[@]}"; do
         if [[ "$cmd" == "zinit" ]]; then
             if [[ -f "${ZINIT_HOME}/zinit.zsh" ]]; then
@@ -93,10 +93,10 @@ main() {
             ((errors++))
         fi
     done
-    
+
     # Check ZSH configuration modules
     log_header "Checking ZSH modules..."
-    
+
     local modules=("exports.zsh" "history.zsh" "options.zsh" "plugins.zsh" "completions.zsh" "fzf.zsh" "aliases.zsh" "keybindings.zsh" "functions.zsh")
     for module in "${modules[@]}"; do
         if [[ -f "$HOME/.dotfiles/zsh/$module" ]]; then
@@ -106,20 +106,20 @@ main() {
             ((errors++))
         fi
     done
-    
+
     # Performance check
     log_header "Performance check..."
-    
+
     if command_exists zsh; then
         local startup_time=$(time zsh -i -c exit 2>&1 | grep real | awk '{print $2}')
         if [[ -n "$startup_time" ]]; then
             log_info "ZSH startup time: $startup_time"
         fi
     fi
-    
+
     # Summary
     log_header "Summary"
-    
+
     if [[ $errors -eq 0 ]]; then
         log_success "All checks passed! Your dotfiles are properly configured."
         echo ""

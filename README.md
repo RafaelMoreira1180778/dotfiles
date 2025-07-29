@@ -1,6 +1,6 @@
 # Modern ZSH Configuration
 
-A fast, modern, and feature-rich ZSH configuration optimized for development workflows with modular architecture.
+⚡️ macOS-first dotfiles for developers. Fast Zsh setup with modular configs, Starship prompt, FZF, and smart navigation. Optimized for Python, Docker, and Git. 
 
 ## Features
 
@@ -84,24 +84,7 @@ A fast, modern, and feature-rich ZSH configuration optimized for development wor
 - Zoxide for intelligent directory jumping
 - Auto-cd functionality
 - Learning based on usage patterns
-
-### Developer Shortcuts
-
-```bash
-# Git shortcuts
-g          # git
-gs         # git status
-ga         # git add
-gc         # git commit
-
-# Docker shortcuts
-d          # docker
-dc         # docker-compose
-
-# Python shortcuts
-py         # python3
-pip        # pip3
-```
+- Direnv for environment variables per directory
 
 ## Customization
 
@@ -134,6 +117,9 @@ zinit light user/plugin-name
 | **Zoxide**   | Smart directory jumping                 |
 | **Eza**      | Modern `ls` replacement                 |
 | **Bat**      | Enhanced `cat` with syntax highlighting |
+| **Volta**    | Node version manager                    |
+| **Pyenv**    | Python verrsion manager                 |
+| **Direnv**   | Environment variables per directory     |
 
 ## Performance
 
@@ -148,8 +134,6 @@ zinit light user/plugin-name
 3. Make your changes
 4. Test thoroughly
 5. Submit a pull request
-
-For local customization, create `~/.dotfiles/zsh/local.zsh` for machine-specific settings that won't be tracked in git.
 
 ## License
 
