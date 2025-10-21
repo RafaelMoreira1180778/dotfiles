@@ -77,7 +77,7 @@ main() {
     # Check required commands
     log_header "Checking required tools..."
 
-    local commands=("starship" "fzf" "zoxide" "eza" "bat" "direnv" "volta" "pyenv")
+    local commands=("starship" "fzf" "zoxide" "eza" "bat" "direnv" "uv" "asdf" "docker" "kubectl" "helm")
     for cmd in "${commands[@]}"; do
         if [[ "$cmd" == "zinit" ]]; then
             if [[ -f "${ZINIT_HOME}/zinit.zsh" ]]; then
@@ -89,15 +89,14 @@ main() {
         elif command_exists "$cmd"; then
             log_success "$cmd is available"
         else
-            log_error "$cmd is not installed or not in PATH"
-            ((errors++))
+            log_warning "$cmd is not installed or not in PATH (optional)"
         fi
     done
 
     # Check ZSH configuration modules
     log_header "Checking ZSH modules..."
 
-    local modules=("exports.zsh" "history.zsh" "options.zsh" "plugins.zsh" "completions.zsh" "fzf.zsh" "aliases.zsh" "keybindings.zsh" "functions.zsh")
+    local modules=("exports.zsh" "history.zsh" "options.zsh" "plugins.zsh" "completions.zsh" "_compinit.zsh" "fzf.zsh" "aliases.zsh" "keybindings.zsh" "functions.zsh" "tools.zsh")
     for module in "${modules[@]}"; do
         if [[ -f "$HOME/.dotfiles/zsh/$module" ]]; then
             log_success "$module exists"
@@ -106,6 +105,18 @@ main() {
             ((errors++))
         fi
     done
+
+    # Check completion cache
+    if [[ -d "$HOME/.dotfiles/zsh/completions_cache" ]]; then
+        log_success "Completion cache directory exists"
+        if [[ -f "$HOME/.dotfiles/zsh/completions_cache/_kubectl" ]]; then
+            log_success "kubectl completions cached"
+        else
+            log_warning "kubectl completions not cached (run refresh_completions)"
+        fi
+    else
+        log_warning "Completion cache directory not found"
+    fi
 
     # Performance check
     log_header "Performance check..."

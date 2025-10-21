@@ -70,7 +70,7 @@ install_dependencies() {
     fi
 
     # List of required packages
-    local packages=("starship" "fzf" "zoxide" "eza" "bat" "direnv" "volta" "pyenv")
+    local packages=("starship" "fzf" "zoxide" "eza" "bat" "direnv" "asdf" "uv" "kubectl" "helm" "docker")
 
     for package in "${packages[@]}"; do
         if brew_package_installed "$package"; then
@@ -244,8 +244,18 @@ main() {
     log_header "Next steps:"
     echo "  1. Restart your terminal or run: source ~/.zshrc"
     echo "  2. The first startup might be slower as plugins are downloaded"
-    echo "  3. Use 'zinit times' to check plugin loading performance"
-    echo "  4. Create ~/.dotfiles/zsh/local.zsh for machine-specific customizations"
+    echo "  3. Run 'refresh_completions' to cache kubectl, docker, and helm completions"
+    echo "  4. Use 'zinit times' to check plugin loading performance"
+    echo "  5. Create ~/.dotfiles/zsh/local.zsh for machine-specific customizations"
+    echo ""
+    log_info "Python setup with uv:"
+    echo "  • uv python install 3.12"
+    echo "  • uv python pin 3.12"
+    echo ""
+    log_info "Runtime managers with asdf:"
+    echo "  • asdf plugin add kubectl helm"
+    echo "  • asdf install kubectl latest"
+    echo "  • asdf install helm latest"
     echo ""
     log_info "Key bindings:"
     echo "  • Ctrl+R: FZF history search"
