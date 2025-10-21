@@ -47,21 +47,23 @@
 ├── setup.sh              # Automated setup script
 ├── verify.sh             # Installation verification
 ├── zsh/
+│   ├── .zshenv           # Environment setup (runs first)
 │   ├── .zshrc            # Main configuration
-│   ├── exports.zsh       # Environment variables
+│   ├── exports.zsh       # Environment variables & PATH
 │   ├── history.zsh       # History settings
 │   ├── options.zsh       # ZSH options
-│   ├── plugins.zsh       # Plugin management
-│   ├── completions.zsh   # Tab completion
+│   ├── plugins.zsh       # Plugin management & completion init
+│   ├── completions.zsh   # Tab completion system
 │   ├── fzf.zsh          # FZF integration
 │   ├── aliases.zsh       # Command aliases
 │   ├── keybindings.zsh   # Key bindings
 │   ├── functions.zsh     # Custom functions
+│   ├── tools.zsh         # Tool initialization (zoxide, direnv)
 │   └── local.zsh         # Local machine-specific config (gitignored)
 ├── starship/
 │   └── starship.toml     # Prompt configuration
 └── ghostty/
-    └── config            # Terminal configuration
+    └── config            # Terminal configuration (optional)
 ```
 
 ## Key Features
@@ -72,12 +74,28 @@
 - Menu selection with colored output
 - Smart caching and case-insensitive matching
 
-### FZF Integration
+## Key Bindings
 
-- **Ctrl+R**: History search with modern interface
-- **Ctrl+T**: File finder with syntax highlighting preview
-- **Alt+C**: Directory navigation with tree preview
-- **Ctrl+X+Ctrl+K**: Interactive process killer
+| Binding        | Action                               |
+| -------------- | ------------------------------------ |
+| **Ctrl+R**     | FZF history search                   |
+| **Ctrl+T**     | FZF file finder with preview         |
+| **Alt+C**      | FZF directory navigation             |
+| **Ctrl+X+K**   | Interactive process killer           |
+
+## PATH Initialization
+
+The configuration uses a robust PATH setup to handle various environments:
+
+- **`.zshenv`** - Runs before system files, ensures core commands are available
+- **`exports.zsh`** - Uses `typeset -U PATH` to avoid duplicates and maintain proper precedence
+- **Precedence order**:
+  1. User local binaries (`~/.local/bin`)
+  2. Homebrew installations
+  3. TeX binaries (`/Library/TeX/texbin`)
+  4. System paths (`/bin`, `/usr/bin`, etc.)
+
+This prevents "command not found" errors in VSCode terminals and non-interactive shells.
 
 ### Smart Navigation
 
@@ -109,23 +127,57 @@ zinit light user/plugin-name
 
 ## Included Tools
 
-| Tool         | Purpose                                 |
-| ------------ | --------------------------------------- |
-| **Zinit**    | Plugin manager with fast loading        |
-| **Starship** | Beautiful prompt with git integration   |
-| **FZF**      | Fuzzy finder for files and history      |
-| **Zoxide**   | Smart directory jumping                 |
-| **Eza**      | Modern `ls` replacement                 |
-| **Bat**      | Enhanced `cat` with syntax highlighting |
-| **Volta**    | Node version manager                    |
-| **Pyenv**    | Python verrsion manager                 |
-| **Direnv**   | Environment variables per directory     |
+| Tool         | Purpose                                    |
+| ------------ | ------------------------------------------ |
+| **Zinit**    | Plugin manager with fast loading           |
+| **Starship** | Beautiful prompt with git integration      |
+| **FZF**      | Fuzzy finder for files and history         |
+| **Zoxide**   | Smart directory jumping                    |
+| **Eza**      | Modern `ls` replacement                    |
+| **Bat**      | Enhanced `cat` with syntax highlighting    |
+| **Direnv**   | Environment variables per directory        |
+| **UV**       | Python version manager (modern alternative)|
+| **ASDF**     | Runtime version manager                    |
+| **Docker**   | Container runtime                         |
+| **Kubectl**  | Kubernetes CLI                            |
+| **Helm**     | Kubernetes package manager                |
+| **Kubecolor**| Colored kubectl output                     |
 
 ## Performance
 
 - Cold startup: ~100ms
 - Warm startup: ~50ms
 - 50,000 command history with instant search
+- Efficient plugin loading with Zinit
+
+## Troubleshooting
+
+### "command not found" errors in VSCode terminal
+
+The shell uses `.zshenv` to set up PATH early, ensuring core commands are available. If you see errors:
+
+```bash
+/etc/zshrc:8: command not found: locale
+compdef: unknown command or service: kubectl
+```
+
+**Solution**: These are warnings that won't affect functionality. The setup includes guards to handle them gracefully.
+
+### Slow shell startup
+
+Run `zinit times` to check plugin loading times:
+
+```bash
+zinit times
+```
+
+### Completions not working
+
+Run the custom function to cache completions:
+
+```bash
+refresh_completions
+```
 
 ## Contributing
 
