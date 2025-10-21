@@ -1,46 +1,53 @@
-# Modern ZSH Configuration
+# ⚡ Modern ZSH Configuration
 
-⚡️ macOS-first dotfiles for developers. Fast Zsh setup with modular configs, Starship prompt, FZF, and smart navigation. Optimized for Python, Docker, and Git. 
+[![Zsh](https://img.shields.io/badge/Zsh-5.9-4E9A06?logo=gnu-bash&logoColor=white)](https://www.zsh.org/)
+[![Starship](https://img.shields.io/badge/Starship-1.17-DD0B78?logo=starship&logoColor=white)](https://starship.rs/)
+[![FZF](https://img.shields.io/badge/FZF-0.46-019733?logo=fuzzy&logoColor=white)](https://github.com/junegunn/fzf)
+[![Homebrew](https://img.shields.io/badge/Homebrew-macOS-FBB040?logo=homebrew&logoColor=black)](https://brew.sh/)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
-## Features
+> *99% vibe coded, as all things should be* ✨
 
-- **⚡ Fast startup** - Optimized plugin loading (~50-100ms)
-- **🔍 Smart completion** - Enhanced tab completion with Homebrew integration
-- **🎯 Auto-suggestions** - Context-aware suggestions based on history
-- **🌈 Syntax highlighting** - Real-time command syntax highlighting
-- **📁 Smart navigation** - Zoxide for intelligent directory jumping
-- **🚀 Beautiful prompt** - Starship prompt with git integration
-- **📚 Large history** - 50,000 command history with deduplication
-- **🔍 FZF integration** - Modern fuzzy finder for files and history
-- **🛠️ Developer tools** - Optimized for Python, Docker, and Git
+macOS-first dotfiles for developers who value speed and aesthetics. Fast Zsh setup with modular configs, Starship prompt, FZF, and smart navigation.
 
-## Quick Setup
+## 🚀 What You Get
 
-1. **Clone this repository**:
+**Blazing Fast**: ~50-100ms startup with optimized plugin loading  
+**Smart Completion**: Tab completion with Homebrew integration and context-aware suggestions  
+**Beautiful Prompt**: Starship prompt with git integration and instant feedback  
+**Fuzzy Everything**: FZF for files, history, and directory navigation  
+**Smart Navigation**: Zoxide learns your patterns, auto-cd to directories  
+**Developer Ready**: Python (UV), Docker, Kubernetes, Git tools pre-configured  
+**Massive History**: 50,000 commands with deduplication and instant search
 
-   ```bash
-   git clone <repository-url> ~/.dotfiles
-   cd ~/.dotfiles
-   ```
+## 📋 What You Need
 
-2. **Run the setup script**:
+- macOS (tested on Ventura+)
+- Terminal emulator (Ghostty, iTerm2, or default Terminal.app)
+- Homebrew installed
 
-   ```bash
-   ./setup.sh
-   ```
+## 🛠️ Quick Setup
 
-3. **Restart your terminal** or reload:
+```bash
+# Clone and navigate
+git clone https://github.com/RafaelMoreira1180778/dotfiles.git ~/.dotfiles
+cd ~/.dotfiles
 
-   ```bash
-   source ~/.zshrc
-   ```
+# Run setup
+./setup.sh
 
-4. **Verify installation** (optional):
-   ```bash
-   ./verify.sh
-   ```
+# Reload shell
+source ~/.zshrc
+```
 
-## Structure
+**That's it!** 🎉
+
+Optionally verify everything works:
+```bash
+./verify.sh
+```
+
+## ⚙️ Structure
 
 ```
 ~/.dotfiles/
@@ -66,15 +73,9 @@
     └── config            # Terminal configuration (optional)
 ```
 
-## Key Features
+**Loading order**: `.zshenv` → `.zshrc` → plugins → completions → tools → local overrides
 
-### Tab Completion
-
-- Native ZSH completions with Homebrew integration
-- Menu selection with colored output
-- Smart caching and case-insensitive matching
-
-## Key Bindings
+## ⌨️ Key Bindings
 
 | Binding        | Action                               |
 | -------------- | ------------------------------------ |
@@ -83,110 +84,36 @@
 | **Alt+C**      | FZF directory navigation             |
 | **Ctrl+X+K**   | Interactive process killer           |
 
-## PATH Initialization
+## 🎨 Customization
 
-The configuration uses a robust PATH setup to handle various environments:
-
-- **`.zshenv`** - Runs before system files, ensures core commands are available
-- **`exports.zsh`** - Uses `typeset -U PATH` to avoid duplicates and maintain proper precedence
-- **Precedence order**:
-  1. User local binaries (`~/.local/bin`)
-  2. Homebrew installations
-  3. TeX binaries (`/Library/TeX/texbin`)
-  4. System paths (`/bin`, `/usr/bin`, etc.)
-
-This prevents "command not found" errors in VSCode terminals and non-interactive shells.
-
-### Smart Navigation
-
-- Zoxide for intelligent directory jumping
-- Auto-cd functionality
-- Learning based on usage patterns
-- Direnv for environment variables per directory
-
-## Customization
-
-### Local Configuration
-
-Create `~/.dotfiles/zsh/local.zsh` for machine-specific settings:
+**Local machine config**: Create `~/.dotfiles/zsh/local.zsh` for machine-specific settings (gitignored)
 
 ```bash
 export CUSTOM_VAR="value"
 alias myalias="command"
 ```
 
-This file is automatically sourced at the end of the ZSH configuration and is gitignored for local customization.
-
-### Adding Plugins
-
-Edit `zsh/plugins.zsh` to add new Zinit plugins:
+**Add plugins**: Edit `zsh/plugins.zsh`
 
 ```bash
 zinit light user/plugin-name
 ```
 
-## Included Tools
+## 📚 Built With
 
-| Tool         | Purpose                                    |
-| ------------ | ------------------------------------------ |
-| **Zinit**    | Plugin manager with fast loading           |
-| **Starship** | Beautiful prompt with git integration      |
-| **FZF**      | Fuzzy finder for files and history         |
-| **Zoxide**   | Smart directory jumping                    |
-| **Eza**      | Modern `ls` replacement                    |
-| **Bat**      | Enhanced `cat` with syntax highlighting    |
-| **Direnv**   | Environment variables per directory        |
-| **UV**       | Python version manager (modern alternative)|
-| **ASDF**     | Runtime version manager                    |
-| **Docker**   | Container runtime                         |
-| **Kubectl**  | Kubernetes CLI                            |
-| **Helm**     | Kubernetes package manager                |
-| **Kubecolor**| Colored kubectl output                     |
+- **[Zinit](https://github.com/zdharma-continuum/zinit)** - Blazing fast plugin manager
+- **[Starship](https://starship.rs/)** - Cross-shell prompt with git integration
+- **[FZF](https://github.com/junegunn/fzf)** - Command-line fuzzy finder
+- **[Zoxide](https://github.com/ajeetdsouza/zoxide)** - Smarter cd command
+- **[Eza](https://github.com/eza-community/eza)** - Modern ls replacement
+- **[Direnv](https://direnv.net/)** - Environment switcher for the shell
 
-## Performance
+**Plugins**: zsh-completions, zsh-syntax-highlighting, zsh-autosuggestions, fzf-tab
 
-- Cold startup: ~100ms
-- Warm startup: ~50ms
-- 50,000 command history with instant search
-- Efficient plugin loading with Zinit
+## 📋 License
 
-## Troubleshooting
+MIT License - See [LICENSE](LICENSE) for details.
 
-### "command not found" errors in VSCode terminal
+---
 
-The shell uses `.zshenv` to set up PATH early, ensuring core commands are available. If you see errors:
-
-```bash
-/etc/zshrc:8: command not found: locale
-compdef: unknown command or service: kubectl
-```
-
-**Solution**: These are warnings that won't affect functionality. The setup includes guards to handle them gracefully.
-
-### Slow shell startup
-
-Run `zinit times` to check plugin loading times:
-
-```bash
-zinit times
-```
-
-### Completions not working
-
-Run the custom function to cache completions:
-
-```bash
-refresh_completions
-```
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Test thoroughly
-5. Submit a pull request
-
-## License
-
-MIT License - see [LICENSE](LICENSE) file for details.
+Made with ☕ and ✨ for developers who care about their terminal

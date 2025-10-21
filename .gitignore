@@ -17,10 +17,10 @@ Thumbs.db
 # Local environment
 .env
 .env.local
+.direnv
 
 # IDE
 .vscode/
-.idea/
 
 # Logs
 *.log
