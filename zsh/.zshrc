@@ -1,43 +1,40 @@
-# ==========================================
-# Modern ZSH Configuration
-# ==========================================
-# Fast, efficient, and feature-rich ZSH setup
-# Modular configuration with clear separation of concerns
+#!/usr/bin/env zsh
 
-# Configuration directory
-ZSHCONFIG="$HOME/.dotfiles/zsh"
+# ┌─────────────────────────────────────────────────────────────────────────────┐
+# │                                                                               │
+# │                  Modern ZSH Configuration for macOS                          │
+# │                   Optimized for Speed & Completions                          │
+# │                                                                               │
+# └─────────────────────────────────────────────────────────────────────────────┘
 
-# ==========================================
-# Load configuration modules in order
-# ==========================================
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+#  CONFIGURATION MODULES
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-# 1. Environment variables and PATH
-source "$ZSHCONFIG/exports.zsh"
+source ~/.dotfiles/zsh/options.zsh     # Shell behavior
+source ~/.dotfiles/zsh/exports.zsh     # Environment & PATH
+source ~/.dotfiles/zsh/history.zsh     # History settings
+source ~/.dotfiles/zsh/completions.zsh # Completion system
+source ~/.dotfiles/zsh/aliases.zsh     # Command aliases
 
-# 2. History configuration
-source "$ZSHCONFIG/history.zsh"
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+#  PLUGINS & INTEGRATIONS
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-# 3. ZSH options and behavior
-source "$ZSHCONFIG/options.zsh"
+source ~/.dotfiles/zsh/plugins.zsh   # Zinit plugins
+source ~/.dotfiles/zsh/_compinit.zsh # Initialize completions (must be after plugins)
+source ~/.dotfiles/zsh/tools.zsh     # Tool initialization
+source ~/.dotfiles/zsh/fzf.zsh       # FZF configuration
+source ~/.dotfiles/zsh/functions.zsh # Custom functions
 
-# 4. Plugin management (loads Zinit and plugins)
-source "$ZSHCONFIG/plugins.zsh"
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+#  PROMPT (MUST BE LAST)
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-# 5. Completion system (must be after plugins that add completions)
-source "$ZSHCONFIG/completions.zsh"
+eval "$(starship init zsh)"
 
-# 6. FZF integration and functions
-source "$ZSHCONFIG/fzf.zsh"
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+#  LOCAL CONFIGURATION (GITIGNORED - MACHINE SPECIFIC)
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-# 7. Aliases and shortcuts
-source "$ZSHCONFIG/aliases.zsh"
-
-# 8. Key bindings (must be after FZF functions are defined)
-source "$ZSHCONFIG/keybindings.zsh"
-
-# 9. Custom functions and final integrations
-source "$ZSHCONFIG/functions.zsh"
-
-# 10. Local configuration (machine-specific settings)
-# This must be sourced last to allow overrides
-[[ -f "$ZSHCONFIG/local.zsh" ]] && source "$ZSHCONFIG/local.zsh"
+[[ -f ~/.dotfiles/zsh/local.zsh ]] && source ~/.dotfiles/zsh/local.zsh

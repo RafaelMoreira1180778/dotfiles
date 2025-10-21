@@ -1,182 +1,156 @@
-# ==========================================
-# Starship Prompt Configuration
-# ==========================================
-# Modern, fast, and informative prompt
-# Optimized for development workflow
+# ┌─────────────────────────────────────────────────────────────────────────────┐
+# │                                                                               │
+# │                      Starship Prompt Configuration                           │
+# │                                                                               │
+# │                   Minimal, Fast, Information-Rich Prompt                     │
+# │                                                                               │
+# └─────────────────────────────────────────────────────────────────────────────┘
 
-# ==========================================
-# Global Settings
-# ==========================================
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+#  GLOBAL CONFIGURATION
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
 format = """
-$username\
-$hostname\
-$directory\
+$directory \
 $git_branch\
-$git_status\
-$kubernetes\
-$aws\
-$python\
-$docker_context\
+$git_status \
+$kubernetes \
+$aws \
+$python \
 $cmd_duration\
 $line_break\
 $character"""
 
-# Timeout for commands that are used to get information for starship
-command_timeout = 1000
+command_timeout = 500
+add_newline = true
 
-# ==========================================
-# Prompt Character
-# ==========================================
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+#  CHARACTER (PROMPT SYMBOL)
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
 [character]
-success_symbol = "[❯](bold green)"
-error_symbol = "[❯](bold red)"
-vimcmd_symbol = "[❮](bold yellow)"
+success_symbol = "[➜](bold green)"
+error_symbol = "[➜](bold red)"
 
-# ==========================================
-# Directory Display
-# ==========================================
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+#  DIRECTORY
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
 [directory]
-style = "blue bold"
-truncation_length = 4
+style = "bold cyan"
+truncation_length = 3
 truncate_to_repo = true
-truncation_symbol = "…/"
 home_symbol = "~"
-read_only = " 🔒"
-read_only_style = "red"
 
-# ==========================================
-# Git Integration
-# ==========================================
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+#  GIT
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
 [git_branch]
-symbol = "⎇ "
-style = "bright-green bold"
+symbol = " "
+style = "bold purple"
 format = "[$symbol$branch]($style) "
 
 [git_status]
-style = "bright-yellow"
+style = "bold yellow"
 format = '([\[$all_status$ahead_behind\]]($style) )'
 conflicted = "⚡"
-ahead = "⇡${count}"
-behind = "⇣${count}"
-diverged = "⇕⇡${ahead_count}⇣${behind_count}"
+ahead = "⇡"
+behind = "⇣"
+diverged = "⇕"
 untracked = "?"
 stashed = "$"
 modified = "!"
 staged = "+"
-renamed = "»"
 deleted = "✘"
 
-# ==========================================
-# Programming Languages
-# ==========================================
-[python]
-symbol = "λ "
-style = "yellow bold"
-format = '[$symbol$pyenv_prefix($version)]($style) '
-pyenv_version_name = true
-python_binary = ["python3", "python", "python2"]
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+#  KUBERNETES
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-[nodejs]
-symbol = "⬡ "
-style = "green bold"
-format = "[$symbol$version]($style) "
-
-# ==========================================
-# Development Tools
-# ==========================================
-[docker_context]
-symbol = "⬢ "
-style = "blue bold"
-format = "[$symbol$context]($style) "
-only_with_files = true
-
-[package]
-symbol = "📦 "
-style = "bright-yellow bold"
-format = "[$symbol$version]($style) "
-
-# ==========================================
-# Cloud & Infrastructure
-# ==========================================
 [kubernetes]
 symbol = "☸️ "
-style = "cyan bold"
-format = '[$symbol$context( \($namespace\))]($style) '
+style = "bold cyan"
+format = '[$symbol$context( → $namespace)]($style) '
 disabled = false
+
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+#  AWS
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 [aws]
-symbol = "☁ "
-style = "bright-yellow bold"
-format = '[$symbol($profile )(\($region\))]($style) '
+symbol = "☁️ "
+style = "bold yellow"
+format = '[$symbol$profile]($style) '
 disabled = false
 
-# ==========================================
-# System Information
-# ==========================================
-[username]
-style_user = "cyan bold"
-style_root = "red bold"
-format = "[$user]($style)@"
-disabled = false
-show_always = false
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+#  PYTHON
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-[hostname]
-ssh_only = true
-style = "cyan bold"
-format = "[$hostname]($style) "
+[python]
+symbol = "🐍 "
+style = "bold yellow"
+format = '[$symbol$version]($style) '
+disabled = false
+
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+#  COMMAND DURATION
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 [cmd_duration]
 min_time = 2000
-style = "bright-black"
-format = "took [$duration]($style) "
+style = "bold dimmed white"
+format = " ⏱️  [$duration]($style)"
 
-# ==========================================
-# Shell Integration
-# ==========================================
-[shell]
-disabled = false
-bash_indicator = "bash"
-zsh_indicator = "zsh"
-style = "bright-white bold"
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+#  DISABLED MODULES
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-# ==========================================
-# Time Display (Optional)
-# ==========================================
+[nodejs]
+disabled = true
+
+[ruby]
+disabled = true
+
+[rust]
+disabled = true
+
+[golang]
+disabled = true
+
+[docker_context]
+disabled = true
+
+[package]
+disabled = true
+
+[dotnet]
+disabled = true
+
+[helm]
+disabled = true
+
+[terraform]
+disabled = true
+
+[status]
+disabled = true
+
 [time]
 disabled = true
-style = "bright-black"
-format = "[$time]($style) "
 
-# ==========================================
-# Battery (for laptops)
-# ==========================================
 [battery]
-full_symbol = "⚡"
-charging_symbol = "⇡"
-discharging_symbol = "⇣"
+disabled = true
 
-[[battery.display]]
-threshold = 15
-style = "bold red"
-
-[[battery.display]]
-threshold = 50
-style = "bold yellow"
-
-# ==========================================
-# Memory Usage
-# ==========================================
 [memory_usage]
 disabled = true
-threshold = 70
-symbol = "⚠ "
-style = "bold dimmed white"
 
-# ==========================================
-# Jobs
-# ==========================================
 [jobs]
-symbol = "✦ "
-style = "bold red"
-number_threshold = 1
-symbol_threshold = 1
+disabled = true
+
+[username]
+disabled = true
+
+[hostname]
+disabled = true

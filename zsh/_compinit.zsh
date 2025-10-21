@@ -1,13 +1,11 @@
 # ┌─────────────────────────────────────────────────────────────────────────────┐
 # │                                                                               │
-# │                              Key Bindings                                    │
-# │                          Essential Keybindings Only                          │
+# │                  Initialize Completion (After Plugins Load)                  │
 # │                                                                               │
 # └─────────────────────────────────────────────────────────────────────────────┘
 
-# Use Emacs mode for editing
-bindkey -e
+# This MUST run AFTER all plugins are loaded (especially fzf-tab)
+autoload -U compinit && compinit -i
 
-# Ctrl+R: History search (handled by FZF)
-# Ctrl+T: File selection (handled by FZF)
-# Alt+C: Directory navigation (handled by FZF)
+# Kubecolor uses kubectl completions
+compdef kubecolor=kubectl
