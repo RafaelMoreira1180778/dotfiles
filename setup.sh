@@ -70,7 +70,7 @@ install_dependencies() {
     fi
 
     # List of required packages
-    local packages=("starship" "fzf" "zoxide" "eza" "bat" "direnv" "asdf" "uv" "kubectl" "helm" "docker")
+    local packages=("starship" "fzf" "zoxide" "eza" "bat" "direnv" "asdf" "uv" "kubectl" "helm" "docker" "kubecolor")
 
     for package in "${packages[@]}"; do
         if brew_package_installed "$package"; then
@@ -179,7 +179,7 @@ validate_setup() {
     done
 
     # Check if required commands are available
-    local commands=("starship" "fzf" "zoxide" "eza" "bat")
+    local commands=("starship" "fzf" "zoxide" "eza" "bat" "kubecolor" "kubectl")
     for cmd in "${commands[@]}"; do
         if command_exists "$cmd"; then
             log_success "Command available: $cmd"
@@ -222,6 +222,7 @@ main() {
 
     # ZSH configuration
     create_symlink "$DOTFILES_DIR/zsh/.zshrc" "$HOME/.zshrc"
+    create_symlink "$DOTFILES_DIR/zsh/.zshenv" "$HOME/.zshenv"
 
     # Starship configuration
     mkdir -p "$HOME/.config"

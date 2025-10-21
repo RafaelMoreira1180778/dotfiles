@@ -48,6 +48,13 @@ main() {
     # Check symbolic links
     log_header "Checking symbolic links..."
 
+    if [[ -L "$HOME/.zshenv" ]] && [[ "$(readlink "$HOME/.zshenv")" == "$HOME/.dotfiles/zsh/.zshenv" ]]; then
+        log_success "ZSH environment (.zshenv) linked correctly"
+    else
+        log_error "ZSH environment (.zshenv) not linked properly"
+        ((errors++))
+    fi
+
     if [[ -L "$HOME/.zshrc" ]] && [[ "$(readlink "$HOME/.zshrc")" == "$HOME/.dotfiles/zsh/.zshrc" ]]; then
         log_success "ZSH configuration linked correctly"
     else
@@ -77,7 +84,7 @@ main() {
     # Check required commands
     log_header "Checking required tools..."
 
-    local commands=("starship" "fzf" "zoxide" "eza" "bat" "direnv" "uv" "asdf" "docker" "kubectl" "helm")
+    local commands=("starship" "fzf" "zoxide" "eza" "bat" "direnv" "uv" "asdf" "docker" "kubectl" "helm" "kubecolor")
     for cmd in "${commands[@]}"; do
         if [[ "$cmd" == "zinit" ]]; then
             if [[ -f "${ZINIT_HOME}/zinit.zsh" ]]; then

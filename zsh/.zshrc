@@ -22,7 +22,6 @@ source ~/.dotfiles/zsh/aliases.zsh     # Command aliases
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 source ~/.dotfiles/zsh/plugins.zsh   # Zinit plugins
-source ~/.dotfiles/zsh/_compinit.zsh # Initialize completions (must be after plugins)
 source ~/.dotfiles/zsh/tools.zsh     # Tool initialization
 source ~/.dotfiles/zsh/fzf.zsh       # FZF configuration
 source ~/.dotfiles/zsh/functions.zsh # Custom functions

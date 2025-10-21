@@ -1,22 +1,30 @@
-# ┌─────────────────────────────────────────────────────────────────────────────┐
-# │                                                                               │
-# │                   Environment Variables & PATH Setup                         │
-# │                                                                               │
-# └─────────────────────────────────────────────────────────────────────────────┘
-
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-#  HOMEBREW & SYSTEM PATHS
+#  Environment Variables & PATH Setup
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:$PATH"
-export PATH="/usr/local/bin:/usr/local/sbin:$PATH"
-export PATH="$HOME/.local/bin:$PATH"
-
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-#  UV - Python Version Manager (replaces pyenv)
+#  CRITICAL: Build clean PATH to ensure commands are found during init
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-export PATH="$HOME/.local/bin:$PATH" # uv installs here by default
+# Remove duplicates and build a clean PATH with proper precedence:
+# 1. User local binaries (highest priority)
+# 2. Homebrew (includes perl, python, etc)
+# 3. macOS system paths (ensures locale, sed, etc are available)
+typeset -U PATH path=(
+    "$HOME/.local/bin"
+    "/opt/homebrew/opt/perl/bin"
+    "/Library/TeX/texbin"
+    "/opt/homebrew/bin"
+    "/opt/homebrew/sbin"
+    "/usr/local/bin"
+    "/usr/local/sbin"
+    "/bin"
+    "/usr/bin"
+    "/sbin"
+    "/usr/sbin"
+    $path
+)
+export PATH
 
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 #  ASDF - Runtime Version Manager (kubectl, helm, etc)
