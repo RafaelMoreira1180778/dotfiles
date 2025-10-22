@@ -123,3 +123,31 @@ refresh_completions() {
     rm -f ~/.zcompdump*
     echo "✅ Completions refreshed! Reload your shell with: exec zsh"
 }
+
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+#  PYTHON VIRTUAL ENVIRONMENT AUTO-ACTIVATION
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+autoload -U add-zsh-hook
+
+_auto_activate_venv() {
+    # Deactivate current venv if we're in one
+    if [[ -n "$VIRTUAL_ENV" ]]; then
+        local CURRENT_VENV_DIR=$(dirname "$(dirname "$VIRTUAL_ENV")")
+        # If we're not in a subdirectory of the current venv, deactivate
+        if [[ "$PWD" != "$CURRENT_VENV_DIR"* ]]; then
+            deactivate 2>/dev/null
+        fi
+    fi
+
+    # Check for venv in current directory
+    if [[ -f ".venv/bin/activate" ]]; then
+        source ".venv/bin/activate"
+        echo "🐍 Activated virtual environment: .venv"
+    elif [[ -f "venv/bin/activate" ]]; then
+        source "venv/bin/activate"
+        echo "🐍 Activated virtual environment: venv"
+    fi
+}
+
+add-zsh-hook chpwd _auto_activate_venv
