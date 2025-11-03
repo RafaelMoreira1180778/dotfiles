@@ -69,18 +69,6 @@ main() {
         ((errors++))
     fi
 
-    # Check Ghostty configuration if it exists
-    if [[ -L "$HOME/.config/ghostty/config" ]]; then
-        if [[ "$(readlink "$HOME/.config/ghostty/config")" == "$HOME/.dotfiles/ghostty/config" ]]; then
-            log_success "Ghostty configuration linked correctly"
-        else
-            log_error "Ghostty configuration not linked properly"
-            ((errors++))
-        fi
-    else
-        log_info "Ghostty configuration not found (optional)"
-    fi
-
     # Check required commands
     log_header "Checking required tools..."
 
@@ -103,7 +91,7 @@ main() {
     # Check ZSH configuration modules
     log_header "Checking ZSH modules..."
 
-    local modules=("exports.zsh" "history.zsh" "options.zsh" "plugins.zsh" "completions.zsh" "_compinit.zsh" "fzf.zsh" "aliases.zsh" "keybindings.zsh" "functions.zsh" "tools.zsh")
+    local modules=("exports.zsh" "history.zsh" "options.zsh" "plugins.zsh" "completions.zsh" "fzf.zsh" "aliases.zsh" "keybindings.zsh" "functions.zsh" "tools.zsh")
     for module in "${modules[@]}"; do
         if [[ -f "$HOME/.dotfiles/zsh/$module" ]]; then
             log_success "$module exists"

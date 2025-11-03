@@ -142,11 +142,9 @@ _auto_activate_venv() {
 
     # Check for venv in current directory
     if [[ -f ".venv/bin/activate" ]]; then
-        source ".venv/bin/activate"
-        echo "🐍 Activated virtual environment: .venv"
+        source ".venv/bin/activate" 2>/dev/null
     elif [[ -f "venv/bin/activate" ]]; then
-        source "venv/bin/activate"
-        echo "🐍 Activated virtual environment: venv"
+        source "venv/bin/activate" 2>/dev/null
     fi
 }
 

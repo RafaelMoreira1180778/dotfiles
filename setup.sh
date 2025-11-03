@@ -157,14 +157,10 @@ validate_setup() {
 
     # Check if symbolic links were created successfully
     local links=(
+        "$HOME/.zshenv:$DOTFILES_DIR/zsh/.zshenv"
         "$HOME/.zshrc:$DOTFILES_DIR/zsh/.zshrc"
         "$HOME/.config/starship.toml:$DOTFILES_DIR/starship/starship.toml"
     )
-
-    # Add Ghostty config if it exists
-    if [[ -L "$HOME/.config/ghostty/config" ]]; then
-        links+=("$HOME/.config/ghostty/config:$DOTFILES_DIR/ghostty/config")
-    fi
 
     for link_info in "${links[@]}"; do
         local target="${link_info%%:*}"
@@ -224,16 +220,16 @@ main() {
     create_symlink "$DOTFILES_DIR/zsh/.zshrc" "$HOME/.zshrc"
     create_symlink "$DOTFILES_DIR/zsh/.zshenv" "$HOME/.zshenv"
 
+    # Create completions cache directory
+    local COMPLETIONS_CACHE_DIR="$DOTFILES_DIR/zsh/completions_cache"
+    if [[ ! -d "$COMPLETIONS_CACHE_DIR" ]]; then
+        mkdir -p "$COMPLETIONS_CACHE_DIR"
+        log_info "Created completions cache directory: $COMPLETIONS_CACHE_DIR"
+    fi
+
     # Starship configuration
     mkdir -p "$HOME/.config"
     create_symlink "$DOTFILES_DIR/starship/starship.toml" "$HOME/.config/starship.toml"
-
-    # Ghostty configuration (only if Ghostty is installed)
-    if [[ -d "/Applications/Ghostty.app" ]] || command_exists ghostty; then
-        create_symlink "$DOTFILES_DIR/ghostty/config" "$HOME/.config/ghostty/config"
-    else
-        log_info "Ghostty not found, skipping Ghostty configuration"
-    fi
 
     # Validate the setup
     validate_setup

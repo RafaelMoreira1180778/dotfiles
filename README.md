@@ -23,7 +23,7 @@ macOS-first dotfiles for developers who value speed and aesthetics. Fast Zsh set
 ## 📋 What You Need
 
 - macOS (tested on Ventura+)
-- Terminal emulator (Ghostty, iTerm2, or default Terminal.app)
+- Terminal emulator (iTerm2, Terminal.app, or any modern terminal)
 - Homebrew installed
 
 ## 🛠️ Quick Setup
@@ -69,8 +69,6 @@ Optionally verify everything works:
 │   └── local.zsh         # Local machine-specific config (gitignored)
 ├── starship/
 │   └── starship.toml     # Prompt configuration
-└── ghostty/
-    └── config            # Terminal configuration (optional)
 ```
 
 **Loading order**: `.zshenv` → `.zshrc` → plugins → completions → tools → local overrides

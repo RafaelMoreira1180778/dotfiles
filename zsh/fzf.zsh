@@ -85,7 +85,7 @@ zle -N fzf-cd-widget
 #  Process Killer
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-fzf-kill-process() {
+fzf-kill-process-widget() {
     local pid
     pid=$(ps -ef | sed 1d | fzf \
         --prompt='💀 Kill: ' \
@@ -99,7 +99,7 @@ fzf-kill-process() {
         kill -9 $pid
     fi
 }
-zle -N fzf-kill-process
+zle -N fzf-kill-process-widget
 
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 #  FZF-TAB Configuration
