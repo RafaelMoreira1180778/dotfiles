@@ -217,14 +217,15 @@ main() {
     log_header "Creating symbolic links..."
 
     # ZSH configuration
-    create_symlink "$DOTFILES_DIR/zsh/.zshrc" "$HOME/.zshrc"
     create_symlink "$DOTFILES_DIR/zsh/.zshenv" "$HOME/.zshenv"
+    create_symlink "$DOTFILES_DIR/zsh/.zshrc" "$HOME/.zshrc"
 
-    # Create completions cache directory
-    local COMPLETIONS_CACHE_DIR="$DOTFILES_DIR/zsh/completions_cache"
-    if [[ ! -d "$COMPLETIONS_CACHE_DIR" ]]; then
-        mkdir -p "$COMPLETIONS_CACHE_DIR"
-        log_info "Created completions cache directory: $COMPLETIONS_CACHE_DIR"
+    # Create ZSH cache directory for completions and history
+    local ZSH_CACHE_DIR="$HOME/.zsh/cache"
+    local ZSH_COMPLETIONS_CACHE_DIR="$ZSH_CACHE_DIR/completions"
+    if [[ ! -d "$ZSH_COMPLETIONS_CACHE_DIR" ]]; then
+        mkdir -p "$ZSH_COMPLETIONS_CACHE_DIR"
+        log_info "Created ZSH cache directories: $ZSH_CACHE_DIR"
     fi
 
     # Starship configuration

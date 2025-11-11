@@ -3,36 +3,10 @@
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-#  CRITICAL: Build clean PATH to ensure commands are found during init
-# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-# Remove duplicates and build a clean PATH with proper precedence:
-# 1. User local binaries (highest priority)
-# 2. Homebrew (includes perl, python, etc)
-# 3. macOS system paths (ensures locale, sed, etc are available)
-typeset -U PATH path=(
-    "$HOME/.local/bin"
-    "/opt/homebrew/opt/perl/bin"
-    "/Library/TeX/texbin"
-    "/opt/homebrew/bin"
-    "/opt/homebrew/sbin"
-    "/usr/local/bin"
-    "/usr/local/sbin"
-    "/bin"
-    "/usr/bin"
-    "/sbin"
-    "/usr/sbin"
-    $path
-)
-export PATH
-
-# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 #  ASDF - Runtime Version Manager (kubectl, helm, etc)
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 export ASDF_DIR="$HOME/.asdf"
-# Note: asdf installed via Homebrew doesn't require sourcing asdf.sh
-# The command is already in PATH from Homebrew
 
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 #  CORE ENVIRONMENT

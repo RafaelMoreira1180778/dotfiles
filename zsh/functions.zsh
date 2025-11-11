@@ -89,37 +89,17 @@ update_eks() {
 }
 
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-#  PROXY MANAGEMENT
-# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-enable_proxy() {
-    export HTTP_PROXY="http://zscaler.proxy.int.kn:80"
-    export HTTPS_PROXY="http://zscaler.proxy.int.kn:80"
-    export NO_PROXY="127.0.0.1,localhost,.int.kn,.eks.amazonaws.com"
-    [ "$1" != "--silent" ] && echo "🔓 Proxy Enabled ✅"
-}
-
-disable_proxy() {
-    unset HTTP_PROXY
-    unset HTTPS_PROXY
-    unset NO_PROXY
-    echo "🔒 Proxy Disabled ❌"
-}
-
-# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 #  COMPLETION CACHE REFRESH
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 refresh_completions() {
-    local CACHE_DIR="${ZDOTDIR:=~}/.dotfiles/zsh/completions_cache"
-    mkdir -p "$CACHE_DIR"
+    local CACHE_DIR="${ZDOTDIR:=~}/.zsh/cache/completions"
 
     echo "🔄 Refreshing completion cache..."
     kubectl completion zsh >"$CACHE_DIR/_kubectl" && echo "✅ kubectl completions updated"
     docker completion zsh >"$CACHE_DIR/_docker" && echo "✅ docker completions updated"
     helm completion zsh >"$CACHE_DIR/_helm" && echo "✅ helm completions updated"
 
-    # Clear compinit cache to force reload
     rm -f ~/.zcompdump*
     echo "✅ Completions refreshed! Reload your shell with: exec zsh"
 }

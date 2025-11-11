@@ -7,7 +7,7 @@
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 # Add cached tool completions first (highest priority, static)
-FPATH="${ZDOTDIR:=~}/.dotfiles/zsh/completions_cache:$FPATH"
+FPATH="$HOME/.zsh/cache/completions:$FPATH"
 
 # Add Homebrew completions
 FPATH="$(brew --prefix)/share/zsh/site-functions:$FPATH"
@@ -74,7 +74,7 @@ zstyle ':fzf-tab:complete:kubectl:*' fzf-preview ''
 zstyle ':fzf-tab:complete:k:*' fzf-preview ''
 
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-#  CACHE DIRECTORY
+#  INITIALIZE COMPLETION SYSTEM
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-mkdir -p ~/.zsh/cache
+autoload -U compinit && compinit -i

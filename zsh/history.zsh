@@ -6,7 +6,7 @@
 #  History Storage
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-HISTFILE="$HOME/.zsh_history"
+HISTFILE="$HOME/.zsh/cache/HISTFILE"
 HISTSIZE=50000
 SAVEHIST=50000
 

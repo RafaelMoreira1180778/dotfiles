@@ -56,9 +56,9 @@ main() {
     fi
 
     if [[ -L "$HOME/.zshrc" ]] && [[ "$(readlink "$HOME/.zshrc")" == "$HOME/.dotfiles/zsh/.zshrc" ]]; then
-        log_success "ZSH configuration linked correctly"
+        log_success "ZSH configuration (.zshrc) linked correctly"
     else
-        log_error "ZSH configuration not linked properly"
+        log_error "ZSH configuration (.zshrc) not linked properly"
         ((errors++))
     fi
 
@@ -101,25 +101,35 @@ main() {
         fi
     done
 
-    # Check completion cache
-    if [[ -d "$HOME/.dotfiles/zsh/completions_cache" ]]; then
-        log_success "Completion cache directory exists"
-        if [[ -f "$HOME/.dotfiles/zsh/completions_cache/_kubectl" ]]; then
-            log_success "kubectl completions cached"
+    # Check ZSH cache directories
+    log_header "Checking ZSH cache..."
+
+    if [[ -d "$HOME/.zsh/cache" ]]; then
+        log_success "ZSH cache directory exists"
+        if [[ -d "$HOME/.zsh/cache/completions" ]]; then
+            log_success "Completions cache directory exists"
+            if [[ -f "$HOME/.zsh/cache/completions/_kubectl" ]]; then
+                log_success "kubectl completions cached"
+            else
+                log_warning "kubectl completions not cached (run refresh_completions)"
+            fi
         else
-            log_warning "kubectl completions not cached (run refresh_completions)"
+            log_warning "Completions cache directory not found (run setup or refresh_completions)"
         fi
     else
-        log_warning "Completion cache directory not found"
+        log_error "ZSH cache directory missing"
+        ((errors++))
     fi
 
     # Performance check
     log_header "Performance check..."
 
     if command_exists zsh; then
-        local startup_time=$(time zsh -i -c exit 2>&1 | grep real | awk '{print $2}')
+        local startup_time=$({ time zsh -i -c exit 2>&1; } 2>&1 | grep real | awk '{print $2}')
         if [[ -n "$startup_time" ]]; then
             log_info "ZSH startup time: $startup_time"
+        else
+            log_warning "Could not measure startup time"
         fi
     fi
 

@@ -6,8 +6,6 @@
 #  CRITICAL: Early PATH setup (runs BEFORE /etc/zshrc)
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-# Ensure system paths are available BEFORE /etc/zshrc runs
-# This prevents "command not found: locale" errors
 typeset -U PATH path=(
     "$HOME/.local/bin"
     "/opt/homebrew/opt/perl/bin"
@@ -22,4 +20,5 @@ typeset -U PATH path=(
     "/usr/sbin"
     $path
 )
+
 export PATH
