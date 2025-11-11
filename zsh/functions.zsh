@@ -89,22 +89,6 @@ update_eks() {
 }
 
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-#  COMPLETION CACHE REFRESH
-# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-refresh_completions() {
-    local CACHE_DIR="${ZDOTDIR:=~}/.zsh/cache/completions"
-
-    echo "🔄 Refreshing completion cache..."
-    kubectl completion zsh >"$CACHE_DIR/_kubectl" && echo "✅ kubectl completions updated"
-    docker completion zsh >"$CACHE_DIR/_docker" && echo "✅ docker completions updated"
-    helm completion zsh >"$CACHE_DIR/_helm" && echo "✅ helm completions updated"
-
-    rm -f ~/.zcompdump*
-    echo "✅ Completions refreshed! Reload your shell with: exec zsh"
-}
-
-# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 #  PYTHON VIRTUAL ENVIRONMENT AUTO-ACTIVATION
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

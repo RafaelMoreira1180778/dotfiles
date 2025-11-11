@@ -81,16 +81,6 @@ install_dependencies() {
             log_success "$package installed successfully"
         fi
     done
-
-    # Install Zinit if not present
-    local zinit_dir="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
-    if [[ ! -d "$zinit_dir" ]]; then
-        log_info "Installing Zinit plugin manager..."
-        bash -c "$(curl --fail --show-error --silent --location https://raw.githubusercontent.com/zdharma-continuum/zinit/HEAD/scripts/install.sh)"
-        log_success "Zinit installed successfully"
-    else
-        log_success "Zinit already installed"
-    fi
 }
 
 # ==========================================
@@ -225,7 +215,25 @@ main() {
     local ZSH_COMPLETIONS_CACHE_DIR="$ZSH_CACHE_DIR/completions"
     if [[ ! -d "$ZSH_COMPLETIONS_CACHE_DIR" ]]; then
         mkdir -p "$ZSH_COMPLETIONS_CACHE_DIR"
-        log_info "Created ZSH cache directories: $ZSH_CACHE_DIR"
+        log_success "Created ZSH cache directories"
+    fi
+
+    # Generate completions
+    log_header "Generating command completions..."
+
+    if command_exists kubectl; then
+        kubectl completion zsh >"$ZSH_COMPLETIONS_CACHE_DIR/_kubectl" 2>/dev/null
+        log_success "Generated kubectl completions"
+    fi
+
+    if command_exists docker; then
+        docker completion zsh >"$ZSH_COMPLETIONS_CACHE_DIR/_docker" 2>/dev/null
+        log_success "Generated docker completions"
+    fi
+
+    if command_exists helm; then
+        helm completion zsh >"$ZSH_COMPLETIONS_CACHE_DIR/_helm" 2>/dev/null
+        log_success "Generated helm completions"
     fi
 
     # Starship configuration
@@ -241,25 +249,20 @@ main() {
     echo ""
     log_header "Next steps:"
     echo "  1. Restart your terminal or run: source ~/.zshrc"
-    echo "  2. The first startup might be slower as plugins are downloaded"
-    echo "  3. Run 'refresh_completions' to cache kubectl, docker, and helm completions"
-    echo "  4. Use 'zinit times' to check plugin loading performance"
-    echo "  5. Create ~/.dotfiles/zsh/local.zsh for machine-specific customizations"
+    echo "  2. Create ~/.dotfiles/zsh/local.zsh for machine-specific customizations"
     echo ""
     log_info "Python setup with uv:"
     echo "  • uv python install 3.12"
     echo "  • uv python pin 3.12"
     echo ""
     log_info "Runtime managers with asdf:"
-    echo "  • asdf plugin add kubectl helm"
-    echo "  • asdf install kubectl latest"
-    echo "  • asdf install helm latest"
+    echo "  • asdf plugin add nodejs"
+    echo "  • asdf install nodejs latest"
     echo ""
     log_info "Key bindings:"
     echo "  • Ctrl+R: FZF history search"
     echo "  • Ctrl+T: FZF file finder"
     echo "  • Alt+C:  FZF directory navigation"
-    echo "  • Ctrl+X+Ctrl+K: Process killer"
     echo ""
     log_warning "Note: Do not run 'exec zsh' as it may break your current session"
 }
