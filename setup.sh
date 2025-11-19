@@ -1,271 +1,83 @@
 #!/usr/bin/env zsh
-
 # ==========================================
 # Dotfiles Setup Script
 # ==========================================
-# Modern ZSH configuration setup with dependency management
-
 set -e
 
-# Colors for output
+# Colors
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
 PURPLE='\033[0;35m'
-NC='\033[0m' # No Color
+NC='\033[0m'
 
-# Logging functions
-log_info() {
-    echo -e "${BLUE}ℹ${NC} $1"
-}
+# Logging
+log_info() { echo -e "${BLUE}ℹ${NC} $1"; }
+log_success() { echo -e "${GREEN}✓${NC} $1"; }
+log_warning() { echo -e "${YELLOW}⚠${NC} $1"; }
+log_error() { echo -e "${RED}✗${NC} $1"; }
+log_header() { echo -e "\n${PURPLE}▶${NC} $1"; }
 
-log_success() {
-    echo -e "${GREEN}✓${NC} $1"
-}
+# Utilities
+command_exists() { command -v "$1" >/dev/null 2>&1; }
+brew_package_installed() { brew list "$1" >/dev/null 2>&1; }
 
-log_warning() {
-    echo -e "${YELLOW}⚠${NC} $1"
-}
-
-log_error() {
-    echo -e "${RED}✗${NC} $1"
-}
-
-log_header() {
-    echo -e "${PURPLE}▶${NC} $1"
-}
-
-# Check if command exists
-command_exists() {
-    command -v "$1" >/dev/null 2>&1
-}
-
-# Check if Homebrew package is installed
-brew_package_installed() {
-    brew list "$1" >/dev/null 2>&1
-}
-
-# ==========================================
-# Dependency Installation
-# ==========================================
-install_dependencies() {
-    log_header "Checking and installing dependencies..."
-
-    # Check for Homebrew (command or Apple Silicon location)
-    if ! command_exists brew && [[ ! -f "/opt/homebrew/bin/brew" ]]; then
-        log_warning "Homebrew not found. Installing Homebrew..."
-        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-        # Add Homebrew to PATH for Apple Silicon Macs
-        if [[ -f "/opt/homebrew/bin/brew" ]]; then
-            eval "$(/opt/homebrew/bin/brew shellenv)"
-        fi
-        log_success "Homebrew installed successfully"
-    else
-        # If Homebrew exists but brew command isn't in PATH, add it
-        if [[ ! $(command -v brew) && -f "/opt/homebrew/bin/brew" ]]; then
-            eval "$(/opt/homebrew/bin/brew shellenv)"
-        fi
-        log_success "Homebrew already installed"
-    fi
-
-    # List of required packages
-    local packages=("starship" "fzf" "zoxide" "eza" "bat" "direnv" "asdf" "uv" "kubectl" "helm" "docker" "kubecolor")
-
-    for package in "${packages[@]}"; do
-        if brew_package_installed "$package"; then
-            log_success "$package already installed"
-        else
-            log_info "Installing $package..."
-            brew install "$package"
-            log_success "$package installed successfully"
-        fi
-    done
-}
-
-# ==========================================
-# System Requirements Check
-# ==========================================
-check_requirements() {
-    log_header "Checking system requirements..."
-
-    # Check if running on macOS
-    if [[ "$OSTYPE" != "darwin"* ]]; then
-        log_error "This configuration is designed for macOS"
-        exit 1
-    fi
-
-    # Check ZSH availability
-    if ! command_exists zsh; then
-        log_error "ZSH is not installed. Please install ZSH first."
-        exit 1
-    fi
-
-    log_success "System requirements met"
-}
-# ==========================================
-# Backup existing configurations
-# ==========================================
-backup_if_exists() {
-    local file="$1"
-    if [[ -f "$file" ]] || [[ -L "$file" ]]; then
-        local backup_file="${file}.backup.$(date +%Y%m%d_%H%M%S)"
-        log_warning "Backing up existing $file to $backup_file"
-        mv "$file" "$backup_file"
-    fi
-}
-
-# ==========================================
-# Create symbolic links
-# ==========================================
-create_symlink() {
-    local source="$1"
-    local target="$2"
-    local target_dir="$(dirname "$target")"
-
-    # Create target directory if it doesn't exist
-    if [[ ! -d "$target_dir" ]]; then
-        mkdir -p "$target_dir"
-        log_info "Created directory: $target_dir"
-    fi
-
-    # Backup existing file/link
-    backup_if_exists "$target"
-
-    # Create symlink
-    ln -s "$source" "$target"
-    log_success "Linked $source → $target"
-}
-
-# ==========================================
-# Post-setup validation
-# ==========================================
-validate_setup() {
-    log_header "Validating setup..."
-
-    local errors=0
-
-    # Check if symbolic links were created successfully
-    local links=(
-        "$HOME/.zshenv:$DOTFILES_DIR/zsh/.zshenv"
-        "$HOME/.zshrc:$DOTFILES_DIR/zsh/.zshrc"
-        "$HOME/.config/starship.toml:$DOTFILES_DIR/starship/starship.toml"
-    )
-
-    for link_info in "${links[@]}"; do
-        local target="${link_info%%:*}"
-        local source="${link_info##*:}"
-
-        if [[ -L "$target" ]] && [[ "$(readlink "$target")" == "$source" ]]; then
-            log_success "Link verified: $target → $source"
-        else
-            log_error "Link failed: $target should point to $source"
-            ((errors++))
-        fi
-    done
-
-    # Check if required commands are available
-    local commands=("starship" "fzf" "zoxide" "eza" "bat" "kubecolor" "kubectl")
-    for cmd in "${commands[@]}"; do
-        if command_exists "$cmd"; then
-            log_success "Command available: $cmd"
-        else
-            log_error "Command not found: $cmd"
-            ((errors++))
-        fi
-    done
-
-    if [[ $errors -eq 0 ]]; then
-        log_success "Setup validation completed successfully"
-        return 0
-    else
-        log_error "Setup validation failed with $errors errors"
-        return 1
-    fi
-}
-
-# ==========================================
-# Main setup process
-# ==========================================
 main() {
-    log_header "Modern ZSH Configuration Setup"
-    echo ""
+    log_header "Dotfiles Setup for macOS"
 
-    # Get the dotfiles directory
-    DOTFILES_DIR="$HOME/.dotfiles"
-
-    if [[ ! -d "$DOTFILES_DIR" ]]; then
-        log_error "Dotfiles directory not found: $DOTFILES_DIR"
+    # Check macOS
+    if [[ "$OSTYPE" != "darwin"* ]]; then
+        log_error "macOS required"
         exit 1
     fi
 
-    # Run setup steps
-    check_requirements
-    install_dependencies
-
-    # Create symbolic links
-    log_header "Creating symbolic links..."
-
-    # ZSH configuration
-    create_symlink "$DOTFILES_DIR/zsh/.zshenv" "$HOME/.zshenv"
-    create_symlink "$DOTFILES_DIR/zsh/.zshrc" "$HOME/.zshrc"
-
-    # Create ZSH cache directory for completions and history
-    local ZSH_CACHE_DIR="$HOME/.zsh/cache"
-    local ZSH_COMPLETIONS_CACHE_DIR="$ZSH_CACHE_DIR/completions"
-    if [[ ! -d "$ZSH_COMPLETIONS_CACHE_DIR" ]]; then
-        mkdir -p "$ZSH_COMPLETIONS_CACHE_DIR"
-        log_success "Created ZSH cache directories"
+    # Install Homebrew
+    if ! command_exists brew; then
+        log_warning "Installing Homebrew..."
+        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+        eval "$(/opt/homebrew/bin/brew shellenv)"
     fi
 
-    # Generate completions
-    log_header "Generating command completions..."
+    # Install dependencies
+    log_header "Installing dependencies..."
+    local packages=(starship fzf zoxide eza bat direnv)
+    for pkg in "${packages[@]}"; do
+        if brew_package_installed "$pkg"; then
+            log_success "$pkg installed"
+        else
+            log_info "Installing $pkg..."
+            brew install "$pkg" && log_success "$pkg installed"
+        fi
+    done
 
-    if command_exists kubectl; then
-        kubectl completion zsh >"$ZSH_COMPLETIONS_CACHE_DIR/_kubectl" 2>/dev/null
-        log_success "Generated kubectl completions"
-    fi
+    # Create symlinks
+    log_header "Creating symlinks..."
+    DOTFILES="$HOME/.dotfiles"
 
-    if command_exists docker; then
-        docker completion zsh >"$ZSH_COMPLETIONS_CACHE_DIR/_docker" 2>/dev/null
-        log_success "Generated docker completions"
-    fi
+    for file in .zshenv .zprofile .zshrc; do
+        if [[ -f "$HOME/$file" && ! -L "$HOME/$file" ]]; then
+            mv "$HOME/$file" "$HOME/${file}.backup.$(date +%Y%m%d)"
+            log_warning "Backed up existing $file"
+        fi
+        ln -sf "$DOTFILES/$file" "$HOME/$file"
+        log_success "$file linked"
+    done
 
-    if command_exists helm; then
-        helm completion zsh >"$ZSH_COMPLETIONS_CACHE_DIR/_helm" 2>/dev/null
-        log_success "Generated helm completions"
-    fi
-
-    # Starship configuration
+    # Starship config
     mkdir -p "$HOME/.config"
-    create_symlink "$DOTFILES_DIR/starship/starship.toml" "$HOME/.config/starship.toml"
+    ln -sf "$DOTFILES/starship/starship.toml" "$HOME/.config/starship.toml"
+    log_success "starship.toml linked"
 
-    # Validate the setup
-    validate_setup
+    # Create local.zshenv if it doesn't exist
+    if [[ ! -f "$DOTFILES/local.zshenv" ]]; then
+        log_info "Creating local.zshenv template..."
+        cp "$DOTFILES/local.zshenv" "$DOTFILES/local.zshenv" 2>/dev/null || true
+        log_warning "Create $DOTFILES/local.zshenv for machine-specific environment config"
+    fi
 
-    log_success "Dotfiles setup completed successfully!"
-
-    # Post-setup instructions
-    echo ""
-    log_header "Next steps:"
-    echo "  1. Restart your terminal or run: source ~/.zshrc"
-    echo "  2. Create ~/.dotfiles/zsh/local.zsh for machine-specific customizations"
-    echo ""
-    log_info "Python setup with uv:"
-    echo "  • uv python install 3.12"
-    echo "  • uv python pin 3.12"
-    echo ""
-    log_info "Runtime managers with asdf:"
-    echo "  • asdf plugin add nodejs"
-    echo "  • asdf install nodejs latest"
-    echo ""
-    log_info "Key bindings:"
-    echo "  • Ctrl+R: FZF history search"
-    echo "  • Ctrl+T: FZF file finder"
-    echo "  • Alt+C:  FZF directory navigation"
-    echo ""
-    log_warning "Note: Do not run 'exec zsh' as it may break your current session"
+    log_success "\n🎉 Setup complete!"
+    log_info "Restart your terminal or run: source ~/.zshrc"
 }
 
-# Run the setup
 main "$@"

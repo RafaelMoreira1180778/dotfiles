@@ -1,6 +1,7 @@
 # Local configuration files
 *.local
 local.zsh
+local.zshenv
 
 # macOS
 .DS_Store

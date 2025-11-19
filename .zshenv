@@ -1,57 +1,42 @@
+#!/usr/bin/env zsh
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-#  Completion System Setup
+#  ZSH Environment - Always loaded (even by VSCode)
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+#
+#  This file is sourced on ALL invocations of the shell (interactive or not).
+#  It's critical for VSCode, LaTeX Workshop, and other tools that spawn
+#  non-interactive shells to have proper PATH configuration.
+#
+#  Keep this file minimal - only PATH and essential environment variables.
+#
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-# Add Homebrew and custom completions to FPATH
-fpath=(
-  "$(brew --prefix)/share/zsh/site-functions"
-  "$HOME/.zsh/cache/completions"
-  $fpath
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+#  PATH CONFIGURATION
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+#
+#  Note: macOS runs /etc/zprofile after this, which calls path_helper and
+#  reorders PATH. We fix this in ~/.zprofile.
+#
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+typeset -U PATH path=(
+    "$HOME/.local/bin"
+    "/opt/homebrew/bin"
+    "/opt/homebrew/sbin"
+    "/usr/local/bin"
+    "/usr/local/sbin"
+    "/bin"
+    "/usr/bin"
+    "/sbin"
+    "/usr/sbin"
+    $path
 )
 
-# Initialize completion system
-autoload -Uz compinit
-compinit -C
+export PATH
 
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-#  COMPLETION STYLES
+#  LOCAL MACHINE OVERRIDES (environment variables only)
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-# Case insensitive completion
-zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
-
-# Colored completion
-zstyle ':completion:*' list-colors '${(s.:.)LS_COLORS}'
-
-# Cache completions for better performance
-zstyle ':completion:*' use-cache on
-zstyle ':completion:*' cache-path "$HOME/.zsh/cache"
-
-# Group completions by category
-zstyle ':completion:*' group-name ''
-zstyle ':completion:*:descriptions' format '%B%d%b'
-
-# Standard completion behavior
-zstyle ':completion:*' completer _complete
-
-# File sorting and directory handling
-zstyle ':completion:*' file-sort modification
-zstyle ':completion:*' special-dirs true
-
-# Force rehash to pick up new completions
-zstyle ':completion:*' rehash true
-
-# Menu selection for completions
-zstyle ':completion:*' menu select
-
-# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-#  ALIAS COMPLETIONS
-# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-# kubectl completions work with kubecolor and k aliases
-compdef kubecolor=kubectl
-compdef k=kubectl
-
-# AWS CLI completions (requires bashcompinit)
-autoload -Uz bashcompinit && bashcompinit
-complete -C aws_completer aws
+[[ -f ~/.dotfiles/local.zshenv ]] && source ~/.dotfiles/local.zshenv

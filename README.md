@@ -18,13 +18,14 @@ macOS-first dotfiles for developers who value speed and simplicity. Fast Zsh set
 
 ## 🚀 What You Get
 
-**Blazing Fast**: No plugin manager overhead, pure Zsh with brew-based tools  
+**Blazing Fast**: No plugin manager overhead, single-file `.zshrc` with brew-based tools  
 **Smart Completion**: Brew completions for all tools, context-aware suggestions  
 **Beautiful Prompt**: Starship prompt with git integration and instant feedback  
 **Fuzzy Everything**: FZF for files, history, and directory navigation  
 **Smart Navigation**: Zoxide learns your patterns, auto-cd to frequently visited directories  
 **Developer Ready**: Python (UV), Docker, Kubernetes, AWS CLI pre-configured  
-**Massive History**: 50,000 commands with deduplication, stored in `~/.zsh/cache/HISTFILE`
+**Auto Python venv**: Automatically activates `.venv` or `venv` when entering project directories  
+**Massive History**: 50,000 commands with deduplication
 
 ## 📋 What You Need
 
@@ -53,30 +54,33 @@ source ~/.zshrc
 ```
 ~/.dotfiles/
 ├── setup.sh              # Automated setup script
+├── .zshenv               # Environment setup (runs first, always loaded)
+├── .zprofile             # Login shell PATH fixes (after macOS path_helper)
+├── .zshrc                # All-in-one interactive shell configuration
+├── local.zshenv          # Machine-specific environment (gitignored)
 ├── zsh/
-│   ├── .zshenv           # Environment setup (runs first, sets PATH)
-│   ├── .zshrc            # Main interactive shell configuration
-│   ├── exports.zsh       # Environment variables
-│   ├── config.zsh        # History, options, aliases, keybindings
-│   ├── completions.zsh   # Tab completion system
-│   ├── functions.zsh     # Custom functions (AWS, EKS)
-│   ├── tools.zsh         # Tool initialization (zoxide, direnv, starship)
-│   └── local.zsh         # Local/machine-specific config (gitignored)
+│   └── local.zsh         # Machine-specific interactive config (gitignored)
 ├── starship/
 │   └── starship.toml     # Starship prompt configuration
-└── ~/.zsh/
-    └── cache/
-        ├── completions/  # Generated completions (_kubectl, _docker, _helm)
-        └── HISTFILE      # Shell history
+└── ~/.zsh_history        # Shell history (50,000 commands)
 ```
+
+**What's in `.zshrc`** (consolidated single file):
+- Environment variables (EDITOR, AWS, Python, etc.)
+- History configuration (50K commands, deduplication)
+- Shell options (auto-cd, globbing, completion)
+- Completion system (Homebrew, case-insensitive)
+- Aliases (eza, bat, safety aliases)
+- Tool initialization (Starship, Zoxide, Direnv, FZF, ASDF)
+- Python venv auto-activation
+- Sources `zsh/local.zsh` for machine-specific overrides
 
 **Startup order (login shell)**:
 1. `/etc/zshenv` (system)
-2. `~/.zshenv` → Sets up PATH for Homebrew & tools
-3. `~/.zshrc` → Sources all configuration modules
-
-**Modules are sourced in order**:
-`exports.zsh` → `config.zsh` → `tools.zsh` → `functions.zsh` → `completions.zsh` → `local.zsh`
+2. `~/.zshenv` → Sets minimal PATH, sources `local.zshenv`
+3. `/etc/zprofile` → macOS `path_helper` reorders PATH
+4. `~/.zprofile` → Fixes PATH order
+5. `~/.zshrc` → All interactive config, sources `zsh/local.zsh`
 
 ## ⌨️ Key Bindings
 
@@ -88,29 +92,57 @@ source ~/.zshrc
 
 ## 🎨 Customization
 
-**Local machine config**: Create `~/.dotfiles/zsh/local.zsh` for machine-specific settings (gitignored)
+### Machine-Specific Environment (`local.zshenv`)
+
+Create `~/.dotfiles/local.zshenv` for machine-specific **environment variables and PATH**:
 
 ```bash
-export CUSTOM_VAR="value"
-alias myalias="command"
+# Example: LaTeX/Perl configuration
+export PATH="/opt/homebrew/opt/perl/bin:/Library/TeX/texbin:$PATH"
+unset PERL5LIB
 
+# Example: Custom AWS region
+export AWS_DEFAULT_REGION="us-east-1"
+
+# Example: RVM
+export PATH="$PATH:$HOME/.rvm/bin"
+```
+
+**Important**: `local.zshenv` runs for **ALL** shells (including VSCode extensions, LaTeX Workshop). Only use environment variables and PATH here.
+
+### Machine-Specific Interactive Config (`zsh/local.zsh`)
+
+Create `~/.dotfiles/zsh/local.zsh` for **aliases, functions, and interactive features**:
+
+```bash
 # Example: Custom aliases
 alias kubectl="kubecolor"
 alias k="kubecolor"
+
+# Example: Override editor
+export EDITOR="vim"
 ```
 
-## 🛠️ Available Commands
+**Important**: `local.zsh` only runs for interactive shells (iTerm2, Terminal.app). Not loaded by VSCode extensions.
 
-**AWS Profile Management**
-```bash
-export_aws_profile [profile-name]  # Set AWS profile (optional fzf picker)
-update_eks [--all]                 # Update kubeconfig for EKS clusters
-```
+## 🛠️ Available Features
 
 **Python Virtual Environments**
+- Auto-activates `.venv` or `venv` when entering project directories
+- Auto-deactivates when leaving project directories
+- No manual activation needed
+
+**Modern Command Replacements**
 ```bash
-# Auto-activates venv or .venv on cd (no command needed)
+ls → eza          # Modern ls with git integration
+cat → bat         # Cat with syntax highlighting
+cd → zoxide       # Smart directory navigation
 ```
+
+**FZF Integration**
+- `Ctrl+R` - Search command history
+- `Ctrl+T` - Find files
+- `Alt+C` - Navigate directories
 
 ## 📚 Built With
 

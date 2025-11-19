@@ -1,15 +1,25 @@
+#!/usr/bin/env zsh
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-#  Tool Initialization
+#  ZSH Profile - Runs AFTER /etc/zprofile (login shells only)
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+#
+#  This file runs after macOS's /etc/zprofile which calls path_helper and
+#  reorders PATH. We restore our preferred order here.
+#
+#  Note: Only runs for login shells (iTerm2, Terminal.app, SSH sessions).
+#  Non-interactive shells (VSCode extensions, LaTeX) only use .zshenv.
+#
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-#  ZOXIDE - Smart Directory Navigation
+#  FIX PATH ORDER (after macOS path_helper)
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-eval "$(zoxide init --cmd cd zsh)"
+typeset -U PATH path=(
+    "$HOME/.local/bin"
+    "/opt/homebrew/bin"
+    "/opt/homebrew/sbin"
+    $path
+)
 
-# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-#  DIRENV - Environment Variables per Directory
-# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-eval "$(direnv hook zsh)"
+export PATH
