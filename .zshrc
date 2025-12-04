@@ -137,12 +137,6 @@ alias ls='eza --group-directories-first'
 alias ll='eza -la --group-directories-first --git'
 alias la='eza -la --group-directories-first'
 alias tree='eza --tree --level=2'
-alias cat='bat'
-
-# Safety
-alias rm='rm -i'
-alias cp='cp -i'
-alias mv='mv -i'
 
 # Shortcuts
 alias dotfiles='code ~/.dotfiles'
@@ -195,3 +189,6 @@ add-zsh-hook chpwd _auto_activate_venv
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 [[ -f ~/.dotfiles/zsh/local.zsh ]] && source ~/.dotfiles/zsh/local.zsh
+
+# Added by Antigravity
+export PATH="/Users/rafael/.antigravity/antigravity/bin:$PATH"
