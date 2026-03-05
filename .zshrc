@@ -4,11 +4,6 @@
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-#  PATH CONFIGURATION
-# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-export PATH="$HOME/.asdf/shims:$PATH"
-
-# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 #  ENVIRONMENT VARIABLES
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -44,9 +39,6 @@ export GPG_TTY="$(tty)"
 # AWS
 export AWS_DEFAULT_REGION="eu-central-1"
 export AWS_REGION="eu-central-1"
-
-# ASDF
-export ASDF_DIR="$HOME/.asdf"
 
 # Less pager
 export LESS='-R -i -w -M -z-4'
@@ -158,8 +150,8 @@ eval "$(direnv hook zsh)"
 source "/opt/homebrew/opt/fzf/shell/key-bindings.zsh"
 source "/opt/homebrew/opt/fzf/shell/completion.zsh"
 
-# ASDF version manager
-source "$HOME/.asdf/asdf.sh"
+# mise version manager
+eval "$(mise activate zsh)"
 
 # Python Virtual Environment Auto-Activation
 autoload -U add-zsh-hook
@@ -189,6 +181,3 @@ add-zsh-hook chpwd _auto_activate_venv
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 [[ -f ~/.dotfiles/zsh/local.zsh ]] && source ~/.dotfiles/zsh/local.zsh
-
-# Added by Antigravity
-export PATH="/Users/rafael/.antigravity/antigravity/bin:$PATH"

@@ -41,7 +41,7 @@ main() {
 
     # Install dependencies
     log_header "Installing dependencies..."
-    local packages=(starship fzf zoxide eza bat direnv)
+    local packages=(starship fzf zoxide eza bat direnv mise)
     for pkg in "${packages[@]}"; do
         if brew_package_installed "$pkg"; then
             log_success "$pkg installed"

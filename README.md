@@ -71,7 +71,7 @@ source ~/.zshrc
 - Shell options (auto-cd, globbing, completion)
 - Completion system (Homebrew, case-insensitive)
 - Aliases (eza, bat, safety aliases)
-- Tool initialization (Starship, Zoxide, Direnv, FZF, ASDF)
+- Tool initialization (Starship, Zoxide, Direnv, FZF, mise)
 - Python venv auto-activation
 - Sources `zsh/local.zsh` for machine-specific overrides
 
@@ -153,7 +153,7 @@ cd → zoxide       # Smart directory navigation
 - **[Bat](https://github.com/sharkdp/bat)** - Cat with syntax highlighting
 - **[Direnv](https://direnv.net/)** - Environment switcher for the shell
 - **[UV](https://astral.sh/blog/uv)** - Fast Python package manager
-- **[ASDF](https://asdf-vm.com/)** - Universal version manager
+- **[Mise](https://mise.jdx.dev/)** - Universal version manager
 
 ## 📋 License
 
