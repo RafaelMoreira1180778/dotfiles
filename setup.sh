@@ -41,7 +41,7 @@ main() {
 
     # Install dependencies
     log_header "Installing dependencies..."
-    local packages=(starship fzf zoxide eza bat direnv mise)
+    local packages=(starship fzf zoxide eza bat direnv mise uv shfmt)
     for pkg in "${packages[@]}"; do
         if brew_package_installed "$pkg"; then
             log_success "$pkg installed"
@@ -72,8 +72,30 @@ main() {
     # Create local.zshenv if it doesn't exist
     if [[ ! -f "$DOTFILES/local.zshenv" ]]; then
         log_info "Creating local.zshenv template..."
-        cp "$DOTFILES/local.zshenv" "$DOTFILES/local.zshenv" 2>/dev/null || true
+        cat >"$DOTFILES/local.zshenv" <<'EOF'
+#!/usr/bin/env zsh
+# Machine-specific environment variables only
+# This file is sourced by ~/.zshenv for all shell invocations
+EOF
         log_warning "Create $DOTFILES/local.zshenv for machine-specific environment config"
+    fi
+
+    # Install Python CLI tools via uv
+    log_header "Installing Python CLI tools..."
+    if command_exists uv; then
+        uv tool install --upgrade pre-commit
+        log_success "pre-commit installed via uv"
+    else
+        log_warning "uv not available; skipping Python CLI tool installation"
+    fi
+
+    # Install pre-commit hooks
+    log_header "Installing pre-commit hooks..."
+    if command_exists pre-commit; then
+        (cd "$DOTFILES" && pre-commit install)
+        log_success "pre-commit hooks installed"
+    else
+        log_warning "pre-commit not available; skipping hook installation"
     fi
 
     log_success "\n🎉 Setup complete!"

@@ -18,13 +18,13 @@ macOS-first dotfiles for developers who value speed and simplicity. Fast Zsh set
 
 ## 🚀 What You Get
 
-**Blazing Fast**: No plugin manager overhead, single-file `.zshrc` with brew-based tools  
-**Smart Completion**: Brew completions for all tools, context-aware suggestions  
-**Beautiful Prompt**: Starship prompt with git integration and instant feedback  
-**Fuzzy Everything**: FZF for files, history, and directory navigation  
-**Smart Navigation**: Zoxide learns your patterns, auto-cd to frequently visited directories  
-**Developer Ready**: Python (UV), Docker, Kubernetes, AWS CLI pre-configured  
-**Auto Python venv**: Automatically activates `.venv` or `venv` when entering project directories  
+**Blazing Fast**: No plugin manager overhead, single-file `.zshrc` with brew-based tools
+**Smart Completion**: Brew completions for all tools, context-aware suggestions
+**Beautiful Prompt**: Starship prompt with git integration and instant feedback
+**Fuzzy Everything**: FZF for files, history, and directory navigation
+**Smart Navigation**: Zoxide learns your patterns, auto-cd to frequently visited directories
+**Developer Ready**: Python (UV), Docker, Kubernetes, AWS CLI pre-configured
+**Auto Python venv**: Automatically activates `.venv` or `venv` when entering project directories
 **Massive History**: 50,000 commands with deduplication
 
 ## 📋 What You Need
