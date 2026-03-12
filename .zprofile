@@ -15,11 +15,16 @@
 #  FIX PATH ORDER (after macOS path_helper)
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+# UV Python 3.12 bin (glob handles minor version bumps, e.g. 3.12.9 -> 3.12.10)
+uv_python_312=($HOME/.local/share/uv/python/cpython-3.12.*(N/[1]))
+
 typeset -U PATH path=(
     "$HOME/.local/bin"
     "/opt/homebrew/bin"
     "/opt/homebrew/sbin"
+    ${uv_python_312[1]:+"${uv_python_312[1]}/bin"}
     $path
 )
+unset uv_python_312
 
 export PATH
