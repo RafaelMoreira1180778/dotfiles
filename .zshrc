@@ -52,15 +52,12 @@ HISTFILE="$HOME/.zsh_history"
 HISTSIZE=50000
 SAVEHIST=50000
 
-setopt HIST_IGNORE_DUPS
 setopt HIST_IGNORE_ALL_DUPS
 setopt HIST_IGNORE_SPACE
 setopt HIST_SAVE_NO_DUPS
 setopt HIST_REDUCE_BLANKS
 setopt HIST_VERIFY
 setopt SHARE_HISTORY
-setopt APPEND_HISTORY
-setopt INC_APPEND_HISTORY
 
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 #  SHELL OPTIONS
@@ -105,9 +102,13 @@ setopt RM_STAR_WAIT
 # Add Homebrew completions to FPATH
 fpath=("/opt/homebrew/share/zsh/site-functions" $fpath)
 
-# Initialize completion system
+# Initialize completion system — full check once per day, cached otherwise
 autoload -Uz compinit
-compinit -C
+if [[ -n ${ZDOTDIR:-$HOME}/.zcompdump(#qN.mh+24) ]]; then
+    compinit
+else
+    compinit -C
+fi
 
 # Completion styles
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
@@ -130,8 +131,38 @@ alias ll='eza -la --group-directories-first --git'
 alias la='eza -la --group-directories-first'
 alias tree='eza --tree --level=2'
 
+# bat — colorized cat
+alias cat='bat --paging=never'
+
 # Shortcuts
 alias dotfiles='code ~/.dotfiles'
+
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+#  FZF CONFIGURATION
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+# Use fd as the default source — respects .gitignore, shows hidden files
+export FZF_DEFAULT_COMMAND='fd --type f --strip-cwd-prefix --hidden --follow --exclude .git'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_ALT_C_COMMAND='fd --type d --strip-cwd-prefix --hidden --follow --exclude .git'
+export FZF_DEFAULT_OPTS='--height 40% --layout reverse --border --info inline'
+
+# Ctrl-T: file picker with bat syntax preview; ctrl-/ toggles preview pane
+export FZF_CTRL_T_OPTS="
+  --walker-skip .git,node_modules
+  --preview 'bat -n --color=always {}'
+  --bind 'ctrl-/:change-preview-window(down|hidden|)'"
+
+# Ctrl-R: history search; ctrl-y copies selected command to clipboard
+export FZF_CTRL_R_OPTS="
+  --bind 'ctrl-y:execute-silent(echo -n {2..} | pbcopy)+abort'
+  --color header:italic
+  --header 'Press CTRL-Y to copy command into clipboard'"
+
+# Alt-C: directory picker with eza tree preview
+export FZF_ALT_C_OPTS="
+  --walker-skip .git,node_modules
+  --preview 'eza --tree --level=2 --color=always {}'"
 
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 #  TOOL INITIALIZATION
@@ -147,8 +178,10 @@ eval "$(zoxide init --cmd cd zsh)"
 eval "$(direnv hook zsh)"
 
 # FZF key bindings and completions
-source "/opt/homebrew/opt/fzf/shell/key-bindings.zsh"
-source "/opt/homebrew/opt/fzf/shell/completion.zsh"
+if [[ -d "/opt/homebrew/opt/fzf" ]]; then
+    source "/opt/homebrew/opt/fzf/shell/key-bindings.zsh"
+    source "/opt/homebrew/opt/fzf/shell/completion.zsh"
+fi
 
 # mise version manager
 eval "$(mise activate zsh)"
@@ -175,9 +208,27 @@ _auto_activate_venv() {
 }
 
 add-zsh-hook chpwd _auto_activate_venv
+_auto_activate_venv # also activate on shell start
 
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 #  LOCAL CONFIGURATION (optional overrides)
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 [[ -f ~/.dotfiles/zsh/local.zsh ]] && source ~/.dotfiles/zsh/local.zsh
+
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+#  ZSH PLUGINS (must be sourced last)
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+# Fish-like command suggestions from history
+if [[ -f "$(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]]; then
+    source "$(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
+    ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=60'
+    ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+    ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
+fi
+
+# Syntax highlighting — must be the very last source in .zshrc
+if [[ -f "$(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]]; then
+    source "$(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+fi

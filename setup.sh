@@ -41,7 +41,7 @@ main() {
 
     # Install dependencies
     log_header "Installing dependencies..."
-    local packages=(starship fzf zoxide eza bat direnv mise uv shfmt)
+    local packages=(starship fzf zoxide eza bat direnv mise uv shfmt fd git-delta zsh-autosuggestions zsh-syntax-highlighting)
     for pkg in "${packages[@]}"; do
         if brew_package_installed "$pkg"; then
             log_success "$pkg installed"
@@ -50,6 +50,14 @@ main() {
             brew install "$pkg" && log_success "$pkg installed"
         fi
     done
+
+    # k9s (Kubernetes TUI) — available via homebrew/core or derailed/k9s tap
+    if ! command_exists k9s; then
+        log_info "Installing k9s..."
+        brew install k9s && log_success "k9s installed"
+    else
+        log_success "k9s installed"
+    fi
 
     # Create symlinks
     log_header "Creating symlinks..."
@@ -69,6 +77,16 @@ main() {
     ln -sf "$DOTFILES/starship/starship.toml" "$HOME/.config/starship.toml"
     log_success "starship.toml linked"
 
+    # mise config
+    mkdir -p "$HOME/.config/mise"
+    if [[ -f "$HOME/.config/mise/config.toml" && ! -L "$HOME/.config/mise/config.toml" ]]; then
+        mv "$HOME/.config/mise/config.toml" "$HOME/.config/mise/config.toml.backup.$(date +%Y%m%d)"
+        log_warning "Backed up existing mise/config.toml"
+    fi
+    ln -sf "$DOTFILES/mise/config.toml" "$HOME/.config/mise/config.toml"
+    mise trust "$DOTFILES/mise/config.toml" >/dev/null 2>&1 || true
+    log_success "mise/config.toml linked"
+
     # Create local.zshenv if it doesn't exist
     if [[ ! -f "$DOTFILES/local.zshenv" ]]; then
         log_info "Creating local.zshenv template..."
@@ -78,6 +96,14 @@ main() {
 # This file is sourced by ~/.zshenv for all shell invocations
 EOF
         log_warning "Create $DOTFILES/local.zshenv for machine-specific environment config"
+    fi
+
+    # Install global Python via uv
+    log_header "Installing global Python via uv..."
+    if command_exists uv; then
+        uv python install 3.12 --default && log_success "Python 3.12 installed as global default via uv"
+    else
+        log_warning "uv not available; skipping Python install"
     fi
 
     # Install Python CLI tools via uv

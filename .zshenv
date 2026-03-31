@@ -21,6 +21,7 @@
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 typeset -U PATH path=(
+    "$HOME/.local/share/mise/shims" # mise-managed runtimes (kubectl, Node, etc.) — must be first
     "$HOME/.local/bin"
     "/opt/homebrew/bin"
     "/opt/homebrew/sbin"
@@ -34,12 +35,6 @@ typeset -U PATH path=(
 )
 
 export PATH
-
-# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-#  UV CONFIGURATION
-# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-export UV_PYTHON=3.12
 
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 #  LOCAL MACHINE OVERRIDES (environment variables only)
