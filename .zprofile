@@ -16,6 +16,7 @@
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 typeset -U PATH path=(
+    "$HOME/.local/share/mise/shims" # mise-managed runtimes — must stay ahead of homebrew
     "$HOME/.local/bin"
     "/opt/homebrew/bin"
     "/opt/homebrew/sbin"

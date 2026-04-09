@@ -21,7 +21,9 @@ $cmd_duration\
 $line_break\
 $character"""
 
-command_timeout = 500
+command_timeout = 1000
+scan_timeout = 30
+follow_symlinks = false
 add_newline = true
 
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -81,7 +83,7 @@ disabled = false
 [aws]
 symbol = "☁️ "
 style = "bold yellow"
-format = '[$symbol$profile]($style) '
+format = '[$symbol$profile( $region)]($style) '
 disabled = false
 
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -91,7 +93,10 @@ disabled = false
 [python]
 symbol = "🐍 "
 style = "bold yellow"
-format = '[$symbol$version]($style) '
+format = '[$symbol$version( \($virtualenv\))]($style) '
+detect_extensions = ["py", "ipynb"]
+detect_files = ["pyproject.toml", "requirements.txt", "requirements-dev.txt", ".python-version", "setup.py", "setup.cfg", "Pipfile", "tox.ini"]
+detect_folders = [".venv", "venv"]
 disabled = false
 
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -132,7 +137,12 @@ disabled = true
 disabled = true
 
 [terraform]
-disabled = true
+symbol = "💠 "
+style = "bold 105"
+format = '[$symbol$workspace]($style) '
+detect_extensions = ["tf", "tfvars"]
+detect_folders = [".terraform"]
+disabled = false
 
 [status]
 disabled = true

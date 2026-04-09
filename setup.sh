@@ -87,6 +87,15 @@ main() {
     mise trust "$DOTFILES/mise/config.toml" >/dev/null 2>&1 || true
     log_success "mise/config.toml linked"
 
+    # VS Code settings
+    mkdir -p "$HOME/Library/Application Support/Code/User"
+    if [[ -f "$HOME/Library/Application Support/Code/User/settings.json" && ! -L "$HOME/Library/Application Support/Code/User/settings.json" ]]; then
+        mv "$HOME/Library/Application Support/Code/User/settings.json" "$HOME/Library/Application Support/Code/User/settings.json.backup.$(date +%Y%m%d)"
+        log_warning "Backed up existing VS Code settings.json"
+    fi
+    ln -sf "$DOTFILES/vscode/settings.json" "$HOME/Library/Application Support/Code/User/settings.json"
+    log_success "VS Code settings.json linked"
+
     # Create local.zshenv if it doesn't exist
     if [[ ! -f "$DOTFILES/local.zshenv" ]]; then
         log_info "Creating local.zshenv template..."
