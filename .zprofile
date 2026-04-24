@@ -16,10 +16,11 @@
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 typeset -U PATH path=(
-    "$HOME/.local/share/mise/shims" # mise-managed runtimes — must stay ahead of homebrew
+    "$HOME/.local/share/mise/shims"
     "$HOME/.local/bin"
     "/opt/homebrew/bin"
     "/opt/homebrew/sbin"
+    /opt/homebrew/opt/*/libexec/gnubin(N-/)
     $path
 )
 

@@ -21,10 +21,11 @@
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 typeset -U PATH path=(
-    "$HOME/.local/share/mise/shims" # mise-managed runtimes (kubectl, Node, etc.) — must be first
+    "$HOME/.local/share/mise/shims"
     "$HOME/.local/bin"
     "/opt/homebrew/bin"
     "/opt/homebrew/sbin"
+    /opt/homebrew/opt/*/libexec/gnubin(N-/)
     "/usr/local/bin"
     "/usr/local/sbin"
     "/bin"
