@@ -33,3 +33,6 @@ kiro/session-index/
 kiro/workspace-roots/
 kiro/.trust-migration.json
 kiro/argv.json
+kiro/extensions/
+kiro/extensions/extensions.json
+kiro/powers
