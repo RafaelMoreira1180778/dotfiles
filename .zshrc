@@ -1,4 +1,3 @@
-#!/usr/bin/env zsh
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 #  ZSH Configuration - Simplified & Optimized
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -9,7 +8,7 @@
 
 # Core
 export EDITOR='code'
-export VISUAL='code'
+export VISUAL=$EDITOR
 export BROWSER='open'
 export PAGER='less'
 export TERM='xterm-256color'
@@ -25,20 +24,8 @@ export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_STATE_HOME="$HOME/.local/state"
 
-# Python
-export PYTHONDONTWRITEBYTECODE=1
-export PYTHONUNBUFFERED=1
-
-# Homebrew
-export HOMEBREW_NO_ANALYTICS=1
-export HOMEBREW_NO_AUTO_UPDATE=1
-
 # GPG
 export GPG_TTY="$(tty)"
-
-# AWS
-export AWS_DEFAULT_REGION="eu-central-1"
-export AWS_REGION="eu-central-1"
 
 # Less pager
 export LESS='-R -i -w -M -z-4'
@@ -139,7 +126,7 @@ alias tree='eza --tree --level=2'
 alias cat='bat --paging=never'
 
 # Shortcuts
-alias dotfiles='code ~/.dotfiles'
+alias dotfiles="$EDITOR ~/.dotfiles"
 
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 #  FZF CONFIGURATION
@@ -171,6 +158,10 @@ export FZF_ALT_C_OPTS="
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 #  TOOL INITIALIZATION
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+if [[ -d "$HOME/.local/bin" ]]; then
+    export PATH="$HOME/.local/bin:$PATH"
+fi
 
 # Starship prompt
 eval "$(starship init zsh)"

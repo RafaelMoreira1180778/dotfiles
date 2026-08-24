@@ -1,26 +1,26 @@
 [user]
-name = Paulo Rafael Moreira
-email = rafael.moreira@kuehne-nagel.com
-signingkey = 458FB1F6AA73B581
+	name = rafael.moreira
+	email = rafael.moreira@kuehne-nagel.com
+	signingkey = 458FB1F6AA73B581
 [commit]
-gpgsign = true
+	gpgsign = true
 [core]
-excludesfile = /Users/rafael.moreira/.dotfiles/.gitignore_global
-pager = delta
+	excludesfile = /Users/rafael.moreira/.dotfiles/.gitignore_global
+	pager = delta
 [interactive]
-diffFilter = delta --color-only
+	diffFilter = delta --color-only
 [delta]
-navigate = true
-dark = true
-line-numbers = true
-side-by-side = true
+	navigate = true
+	dark = true
+	line-numbers = true
+	side-by-side = true
 [merge]
-conflictStyle = zdiff3
+	conflictStyle = zdiff3
 [init]
-defaultBranch = main
+	defaultBranch = main
 [rerere]
-enabled = true
+	enabled = true
 [diff]
-algorithm = histogram
+	algorithm = histogram
 [help]
-autocorrect = prompt
+	autocorrect = prompt

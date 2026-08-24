@@ -14,6 +14,7 @@ format = """
 $directory \
 $git_branch\
 $git_status \
+$env_var \
 $kubernetes \
 $aws \
 $python \
@@ -51,7 +52,7 @@ home_symbol = "~"
 [git_branch]
 symbol = " "
 style = "bold purple"
-format = "[$symbol$branch]($style) "
+format = "[$symbol $branch]($style) "
 
 [git_status]
 style = "bold yellow"
@@ -73,7 +74,7 @@ deleted = "✘"
 [kubernetes]
 symbol = "☸️ "
 style = "bold cyan"
-format = '[$symbol$context( → $namespace)]($style) '
+format = '[$symbol $context( → $namespace)]($style) '
 disabled = false
 
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -83,7 +84,7 @@ disabled = false
 [aws]
 symbol = "☁️ "
 style = "bold yellow"
-format = '[$symbol$profile( $region)]($style) '
+format = '[$symbol $profile( $region)]($style) '
 disabled = false
 
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -93,7 +94,7 @@ disabled = false
 [python]
 symbol = "🐍 "
 style = "bold yellow"
-format = '[$symbol$version( \($virtualenv\))]($style) '
+format = '[$symbol $version( \($virtualenv\))]($style) '
 detect_extensions = ["py", "ipynb"]
 detect_files = ["pyproject.toml", "requirements.txt", "requirements-dev.txt", ".python-version", "setup.py", "setup.cfg", "Pipfile", "tox.ini"]
 detect_folders = [".venv", "venv"]
@@ -107,6 +108,22 @@ disabled = false
 min_time = 2000
 style = "bold dimmed white"
 format = " ⏱️  [$duration]($style)"
+
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+#  DISABLED MODULES
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+#  ENVIRONMENT VARIABLES
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[env_var]
+symbol = "🛠️ "
+variable = "TF_ENV"
+default = ""
+style = "bold blue"
+format = '[$symbol $env_value]($style) '
+disabled = false
 
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 #  DISABLED MODULES
@@ -139,7 +156,7 @@ disabled = true
 [terraform]
 symbol = "💠 "
 style = "bold 105"
-format = '[$symbol$workspace]($style) '
+format = '[$symbol $workspace]($style) '
 detect_extensions = ["tf", "tfvars"]
 detect_folders = [".terraform"]
 disabled = false

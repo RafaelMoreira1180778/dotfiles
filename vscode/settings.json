@@ -6,6 +6,7 @@
   "editor.fontFamily": "FiraCode Nerd Font Mono",
   "editor.fontLigatures": true,
   "editor.wordWrap": "on",
+  "diffEditor.wordWrap": "on",
   "editor.snippetSuggestions": "bottom",
   "editor.accessibilitySupport": "off",
   "editor.formatOnSave": true,
@@ -91,12 +92,7 @@
   // DIFF EDITOR
   // ============================================================================
   "diffEditor.ignoreTrimWhitespace": false,
-  // ============================================================================
-  // WORKBENCH & UI
-  // ============================================================================
-  "workbench.colorTheme": "Tokyo Night AltSynt",
-  "workbench.iconTheme": "a-file-icon-vscode",
-  "workbench.productIconTheme": "a-file-icon-vscode-product-icon-theme",
+  "workbench.iconTheme": "charmed-icons",
   "workbench.sideBar.location": "right",
   "workbench.secondarySideBar.defaultVisibility": "visible",
   // ============================================================================
@@ -129,9 +125,9 @@
   // GITHUB COPILOT
   // ============================================================================
   "github.copilot.enable": {
-    "*": true,
-    "markdown": true,
+    "*": false,
     "plaintext": false,
+    "markdown": false,
     "scminput": false
   },
   "github.copilot.editor.enableAutoCompletions": true,
@@ -242,7 +238,9 @@
     },
     "terraform": true,
     "kubectl explain": true,
-    "helm": true
+    "helm": true,
+    "npx --package yo": true,
+    "uv": true
   },
   // ============================================================================
   // AMAZON Q
@@ -313,6 +311,8 @@
   "editor.minimap.enabled": false,
   "explorer.confirmPasteNative": false,
   "chat.tools.urls.autoApprove": {
+    "https://code.visualstudio.com": true,
+    "https://github.com/microsoft/vscode/wiki/*": true,
     "https://k9scli.io": {
       "approveRequest": false,
       "approveResponse": true
@@ -328,7 +328,9 @@
     "https://github.com": {
       "approveRequest": false,
       "approveResponse": true
-    }
+    },
+    "https://*.github.com": true,
+    "https://argo-cd.readthedocs.io": true
   },
   "chat.useAgentSkills": true,
   "chat.viewSessions.orientation": "stacked",
@@ -348,5 +350,27 @@
   },
   "[markdown]": {
     "editor.defaultFormatter": "yzhang.markdown-all-in-one"
-  }
+  },
+  "[yaml]": {
+    "editor.formatOnSave": true
+  },
+  "yaml.format.printWidth": 1000,
+  "yaml.format.proseWrap": "preserve",
+  "[skill]": {
+    "editor.defaultFormatter": "vscode.markdown-language-features",
+    "editor.insertSpaces": true,
+    "editor.tabSize": 2,
+    "editor.autoIndent": "advanced",
+    "editor.unicodeHighlight.ambiguousCharacters": false,
+    "editor.unicodeHighlight.invisibleCharacters": false,
+    "diffEditor.ignoreTrimWhitespace": false,
+    "editor.wordWrap": "on",
+    "editor.quickSuggestions": {
+      "comments": "off",
+      "strings": "on",
+      "other": "on"
+    },
+    "editor.wordBasedSuggestions": "off"
+  },
+  "workbench.colorTheme": "Kiro Dark"
 }

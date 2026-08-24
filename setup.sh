@@ -77,6 +77,25 @@ main() {
     ln -sf "$DOTFILES/starship/starship.toml" "$HOME/.config/starship.toml"
     log_success "starship.toml linked"
 
+    # Kiro config
+    mkdir -p "$DOTFILES/kiro/hooks" "$DOTFILES/kiro/steering" "$DOTFILES/kiro/settings" "$DOTFILES/kiro/extensions"
+    if [[ -d "$HOME/.kiro" && ! -L "$HOME/.kiro" ]]; then
+        log_warning "Backing up existing ~/.kiro"
+        mv "$HOME/.kiro" "$HOME/.kiro.backup.$(date +%Y%m%d)"
+    fi
+    ln -sf "$DOTFILES/kiro" "$HOME/.kiro"
+    log_success "kiro config linked (~/.kiro)"
+
+    # Kiro User settings (Application Support)
+    local kiro_app_user="$HOME/Library/Application Support/Kiro/User"
+    mkdir -p "$kiro_app_user"
+    if [[ -f "$kiro_app_user/settings.json" && ! -L "$kiro_app_user/settings.json" ]]; then
+        mv "$kiro_app_user/settings.json" "$kiro_app_user/settings.json.backup.$(date +%Y%m%d)"
+        log_warning "Backed up existing Kiro User settings.json"
+    fi
+    ln -sf "$DOTFILES/kiro/settings.json" "$kiro_app_user/settings.json"
+    log_success "Kiro User settings.json linked"
+
     # mise config
     mkdir -p "$HOME/.config/mise"
     if [[ -f "$HOME/.config/mise/config.toml" && ! -L "$HOME/.config/mise/config.toml" ]]; then

@@ -25,3 +25,11 @@ Thumbs.db
 
 # Logs
 *.log
+
+# Kiro (ephemeral/machine-specific)
+kiro/logs/
+kiro/sessions/
+kiro/session-index/
+kiro/workspace-roots/
+kiro/.trust-migration.json
+kiro/argv.json

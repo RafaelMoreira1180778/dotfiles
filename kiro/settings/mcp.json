@@ -1,0 +1,23 @@
+{
+  "mcpServers": {
+    "aws-mcp": {
+      "command": "uvx",
+      "args": [
+        "mcp-proxy-for-aws@latest",
+        "https://aws-mcp.us-east-1.api.aws/mcp"
+      ],
+      "timeout": 100000,
+      "env": {
+        "AWS_MCP_PROXY_PROFILES": "${AWS_PROFILE}",
+        "AWS_REGION": "${AWS_REGION}"
+      }
+    }
+  },
+  "powers": {
+    "mcpServers": {
+      "power-context7-context7": {
+        "url": "https://mcp.context7.com/mcp"
+      }
+    }
+  }
+}

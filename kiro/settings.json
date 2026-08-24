@@ -1,0 +1,261 @@
+{
+  "editor.fontSize": 16,
+  "editor.fontFamily": "FiraCode Nerd Font Mono",
+  "editor.fontLigatures": true,
+  "editor.wordWrap": "on",
+  "diffEditor.wordWrap": "on",
+  "editor.snippetSuggestions": "bottom",
+  "editor.accessibilitySupport": "off",
+  "editor.minimap.sectionHeaderFontSize": 14,
+  "editor.stickyScroll.enabled": true,
+  "editor.bracketPairColorization.enabled": true,
+  "editor.guides.bracketPairs": "active",
+  "editor.smoothScrolling": true,
+  "editor.cursorBlinking": "phase",
+  "editor.renderWhitespace": "boundary",
+  "editor.inlayHints.enabled": "on",
+  "editor.rulers": [
+    88,
+    120
+  ],
+  "workbench.list.smoothScrolling": true,
+  "[dockerfile]": {
+    "editor.defaultFormatter": "ms-azuretools.vscode-containers"
+  },
+  "[terraform]": {
+    "editor.defaultFormatter": "hashicorp.terraform",
+    "editor.formatOnSave": true,
+    "editor.formatOnSaveMode": "file"
+  },
+  "[terraform-vars]": {
+    "editor.defaultFormatter": "hashicorp.terraform",
+    "editor.formatOnSave": true,
+    "editor.formatOnSaveMode": "file"
+  },
+  "[hcl]": {
+    "editor.defaultFormatter": "hashicorp.terraform"
+  },
+  "[shellscript]": {
+    "files.eol": "\n",
+    "editor.defaultFormatter": "foxundermoon.shell-format",
+    "editor.tabSize": 2
+  },
+  "files.associations": {
+    "*.yml": "yaml",
+    "*.hcl": "terraform",
+    "*.tfvars": "terraform"
+  },
+  "files.exclude": {
+    "**/.DS_Store": true,
+    "**/.pytest_cache": true,
+    "**/.ruff_cache": true,
+    "**/__pycache__": true,
+    "**/*.pyc": true
+  },
+  "files.watcherExclude": {
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true,
+    "**/node_modules/**": true,
+    "**/.venv/**": true,
+    "**/.terraform/**": true,
+    "**/.mypy_cache/**": true,
+    "**/.ruff_cache/**": true,
+    "**/__pycache__/**": true,
+    "**/.direnv/**": true
+  },
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/.venv": true,
+    "**/.terraform": true,
+    "**/.mypy_cache": true,
+    "**/.ruff_cache": true,
+    "**/__pycache__": true,
+    "**/dist": true,
+    "**/build": true
+  },
+  "files.autoSave": "onFocusChange",
+  "files.autoSaveWhenNoErrors": true,
+  "files.refactoring.autoSave": true,
+  "explorer.compactFolders": false,
+  "explorer.confirmDragAndDrop": false,
+  "diffEditor.ignoreTrimWhitespace": false,
+  "workbench.sideBar.location": "right",
+  "workbench.secondarySideBar.defaultVisibility": "visible",
+  "terminal.integrated.fontSize": 15,
+  "terminal.integrated.fontLigatures.featureSettings": "\"liga\" on",
+  "terminal.integrated.suggest.enabled": true,
+  "terminal.integrated.scrollback": 999999,
+  "terminal.integrated.persistentSessionScrollback": 999999,
+  "terminal.integrated.defaultProfile.osx": "zsh",
+  "terminal.integrated.splitCwd": "inherited",
+  "terminal.integrated.gpuAcceleration": "auto",
+  "terminal.integrated.env.osx": {
+    "Q_NEW_SESSION": "1",
+    "AWS_SDK_LOAD_CONFIG": "1",
+    "AWS_PAGER": ""
+  },
+  "git.autofetch": true,
+  "git.confirmSync": false,
+  "git.enableSmartCommit": true,
+  "git.replaceTagsWhenPull": true,
+  "git.openRepositoryInParentFolders": "always",
+  "git.mergeEditor": true,
+  "scm.inputFontSize": 16,
+  "chat.fontSize": 18,
+  "chat.editor.fontSize": 18,
+  "chat.editing.confirmEditRequestRemoval": false,
+  "chat.tools.terminal.autoApprove": {
+    "asdf": true,
+    "basename": true,
+    "cat": true,
+    "cd": true,
+    "cmp": true,
+    "column": true,
+    "cut": true,
+    "date": true,
+    "df": true,
+    "dirname": true,
+    "du": true,
+    "echo": true,
+    "file": true,
+    "find": true,
+    "grep": true,
+    "head": true,
+    "ls": true,
+    "pwd": true,
+    "readlink": true,
+    "realpath": true,
+    "sleep": true,
+    "sort": true,
+    "stat": true,
+    "tail": true,
+    "tr": true,
+    "tree": true,
+    "wc": true,
+    "which": true,
+    "git diff": true,
+    "git log": true,
+    "git show": true,
+    "git status": true,
+    "/dev/null": true,
+    "exec zsh -i -c 'echo \"✅ Shell loaded successfully\"'": {
+      "approve": true,
+      "matchCommandLine": true
+    },
+    "rgs-cli": true,
+    "/^column\\b.*-c\\s+[0-9]{4,}/": false,
+    "/^date\\b.*(-s|--set)\\b/": false,
+    "/^find\\b.*-(delete|exec|execdir|fprint|fprintf|fls|ok|okdir)\\b/": false,
+    "/^grep\\b.*-(f|P)\\b/": false,
+    "/^sort\\b.*-(o|S)\\b/": false,
+    "/^tree\\b.*-o\\b/": false,
+    "/\\(.+\\)/": {
+      "approve": false,
+      "matchCommandLine": true
+    },
+    "/\\{.+\\}/": {
+      "approve": false,
+      "matchCommandLine": true
+    },
+    "/`.+`/": {
+      "approve": false,
+      "matchCommandLine": true
+    },
+    "dd": false,
+    "del": false,
+    "erase": false,
+    "kill": false,
+    "ps": false,
+    "rd": false,
+    "ri": false,
+    "rm": true,
+    "rmdir": false,
+    "taskkill": false,
+    "taskkill.exe": false,
+    "top": false,
+    "curl": false,
+    "wget": false,
+    "chmod": false,
+    "chown": false,
+    "eval": false,
+    "jq": false,
+    "xargs": false,
+    "kubectl get": true,
+    "kubectl port-forward": true,
+    "ln": true,
+    "zsh -c 'source ~/.dotfiles/zsh/.zshrc; echo \"Sourced successfully\"'": {
+      "approve": true,
+      "matchCommandLine": true
+    },
+    "terraform": true,
+    "kubectl explain": true,
+    "helm": true
+  },
+  "python.defaultInterpreterPath": "/Users/rafael.moreira/.local/bin/python3",
+  "python.terminal.activateEnvironment": true,
+  "python-envs.alwaysUseUv": true,
+  "python-envs.terminal.autoActivationType": "shellStartup",
+  "shellformat.path": "/opt/homebrew/bin/shfmt",
+  "debug.console.fontSize": 16,
+  "docker.extension.dockerEngineAvailabilityPrompt": false,
+  "docker.extension.enableComposeLanguageServer": false,
+  "containers.containerClient": "com.microsoft.visualstudio.containers.docker",
+  "terraform.experimentalFeatures.validateOnSave": true,
+  "terraform.experimentalFeatures.prefillRequiredFields": true,
+  "terraform.codelens.referenceCount": false,
+  "security.workspace.trust.untrustedFiles": "open",
+  "redhat.telemetry.enabled": false,
+  "http.fetchAdditionalSupport": false,
+  "editor.minimap.enabled": false,
+  "explorer.confirmPasteNative": false,
+  "chat.tools.urls.autoApprove": {
+    "https://k9scli.io": {
+      "approveRequest": false,
+      "approveResponse": true
+    },
+    "https://raw.githubusercontent.com": {
+      "approveRequest": false,
+      "approveResponse": true
+    },
+    "https://github.com/stakater/reloader": {
+      "approveRequest": false,
+      "approveResponse": true
+    },
+    "https://github.com": {
+      "approveRequest": false,
+      "approveResponse": true
+    }
+  },
+  "chat.useAgentSkills": true,
+  "chat.viewSessions.orientation": "stacked",
+  "chat.autopilot.enabled": true,
+  "notebook.formatOnSave.enabled": true,
+  "notebook.codeActionsOnSave": {
+    "notebook.source.fixAll": "explicit",
+    "notebook.source.organizeImports": "explicit"
+  },
+  "[python]": {
+    "editor.defaultFormatter": "charliermarsh.ruff",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll.ruff": "explicit",
+      "source.organizeImports.ruff": "explicit"
+    }
+  },
+  "[markdown]": {
+    "editor.defaultFormatter": "yzhang.markdown-all-in-one"
+  },
+  "[yaml]": {
+    "editor.formatOnSave": true
+  },
+  "kiroAgent.agentAutonomy": "Autopilot",
+  "kiroAgent.modelSelection": "auto",
+  "workbench.iconTheme": "charmed-icons",
+  "kiroAgent.enableTabAutocomplete": false,
+  "kiroAgent.trust.defaultScope": "user",
+  "kiroAgent.mcpApprovedEnvVars": [
+    "AWS_PROFILE",
+    "AWS_REGION",
+    "AWS_MCP_PROXY_PROFILES"
+  ]
+}
