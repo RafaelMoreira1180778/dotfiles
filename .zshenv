@@ -20,18 +20,17 @@
 #
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+HOMEBREW_PREFIX="/opt/homebrew"
+
+if [[ -x "$HOMEBREW_PREFIX/bin/brew" ]]; then
+    eval "$($HOMEBREW_PREFIX/bin/brew shellenv)"
+fi
+
+# Keep user-local tools ahead of system tools, but let Homebrew's shellenv set
+# the canonical macOS Apple Silicon prefix structure.
 typeset -U PATH path=(
     "$HOME/.local/share/mise/shims"
     "$HOME/.local/bin"
-    "/opt/homebrew/bin"
-    "/opt/homebrew/sbin"
-    /opt/homebrew/opt/*/libexec/gnubin(N-/)
-    "/usr/local/bin"
-    "/usr/local/sbin"
-    "/bin"
-    "/usr/bin"
-    "/sbin"
-    "/usr/sbin"
     $path
 )
 

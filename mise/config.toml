@@ -1,4 +1,5 @@
 [tools]
+go = "1.23.12"
 kubectl = "1.34"
 npm = "latest"
 pnpm = "latest"
